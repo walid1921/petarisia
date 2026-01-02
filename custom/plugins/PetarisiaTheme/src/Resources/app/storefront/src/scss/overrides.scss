@@ -130,6 +130,7 @@ input[type="checkbox"] {
     font-size: .75rem !important;
     margin: 0 !important;
     line-height: 0;
+    border: 1px solid $sw-color-brand-primary !important;
     border-radius: $border-radius;
     padding: 0 .5rem;
   }
@@ -335,4 +336,9 @@ input[type="checkbox"] {
     opacity: 0.5;
     cursor: not-allowed;
   }
+}
+
+
+.cart-main-header {
+  margin-bottom: 0 !important;
 }

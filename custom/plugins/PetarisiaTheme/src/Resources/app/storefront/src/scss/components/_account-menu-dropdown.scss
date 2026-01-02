@@ -7,19 +7,24 @@
   }
 }
 
+.list-group-item {
+  padding-left: 1rem !important;
+
+}
+
 .list-group-item-action{
   &:hover {
     z-index: 1;
     color: var(--bs-list-group-action-hover-color);
     text-decoration: none;
-    background-color: #fff !important;
+    background-color: #EBEBEB !important;
   }
 }
 
 .account-aside-item.is-active {
-  color: #121212;
-  font-weight: 700;
-  background-color: #fff !important;
+  color: $sw-color-brand-primary !important;
+  font-weight: 600;
+  background-color: #EBEBEB !important;
 }
 
 .account-aside-item.btn-logout {
