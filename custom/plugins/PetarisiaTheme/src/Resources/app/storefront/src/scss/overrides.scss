@@ -342,3 +342,136 @@ input[type="checkbox"] {
 .cart-main-header {
   margin-bottom: 0 !important;
 }
+
+
+.line-item-details-characteristics {
+  margin: 0 !important;
+  color: $sw-color-brand-secondary;
+}
+
+.line-item-quantity-row {
+  align-items: center;
+  margin-bottom: 0 !important;
+}
+
+.line-item-quantity-select-wrapper{
+  padding: 0 !important;
+}
+
+.line-item-info{
+  padding: 0 !important;
+}
+
+.line-item {
+  padding-top: 0 !important;
+  padding-bottom: 10px !important;
+}
+
+.line-item-img-container {
+  text-align: center;
+  width: 100px !important;
+  height: 100px !important;
+  margin-bottom: 0.5rem;
+
+  .line-item-img {
+    width: 100%;
+    height: 100% !important;
+    object-fit: contain;
+    padding: 0.25rem;
+    border: 1px solid #bbb;
+    border-radius: 0;
+  }
+}
+
+.line-item-details{
+  height: 100px !important;
+  padding: 0 !important;
+}
+
+.line-item-details-container{
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100% !important;
+  width: 100%;
+
+  .price-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100% !important;
+      padding: 0 !important;
+  }
+}
+
+
+/* ===== Compact quantity selector (offcanvas + cart) ===== */
+
+.quantity-selector-group {
+  align-items: center;
+  height: 28px; // total height
+}
+
+.quantity-selector-group .icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 12px;
+  height: 12px;
+
+  font-size: 0 !important;
+  line-height: 0 !important;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+/* Buttons (+ / -) */
+.quantity-selector-group .btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid $sw-border-color;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: $sw-color-brand-primary !important;
+    svg {
+      color: white !important;
+    }
+  }
+}
+
+/* Input field */
+.quantity-selector-group .quantity-selector-group-input {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid $sw-border-color;
+  background: transparent;
+  font-size: 12px !important;
+  text-align: center;
+  line-height: 28px;
+
+  /* Remove number arrows */
+  -moz-appearance: textfield;
+}
+
+//.quantity-selector-group .btn-outline-light.btn-minus {
+//  border-right: 1px solid $sw-border-color !important;
+//  height: 10px;
+//}
+//
+//.quantity-selector-group .btn-outline-light.btn-plus {
+//  border-left: 1px solid $sw-border-color !important;
+//}

@@ -39,12 +39,13 @@
                         {% block component_line_item_type_product_col_info %}
                             <div class="line-item-info">
                                 {% block component_line_item_type_product_info_row %}
-                                    <div class="row line-item-row">
+                                    <div class="d-flex gap-3">
                                         {% set showLineItemModal = activeRoute is same as('frontend.checkout.confirm.page') %}
 
+                                        {# ----------- Image ------------------------ #}
                                         {% if nestingLevel < 1 %}
                                             {% block component_line_item_type_product_image %}
-                                                <div class="col-auto line-item-info-img">
+                                                <div>
                                                     <div class="line-item-img-container">
                                                         {% block component_line_item_type_product_image_inner %}
                                                             {% sw_include '@Storefront/storefront/component/line-item/element/image.html.twig' with {
@@ -57,10 +58,13 @@
                                             {% endblock %}
                                         {% endif %}
 
+                                        {# ----------- Details ------------------------ #}
                                         {% block component_line_item_type_product_details %}
                                             <div class="line-item-details">
                                                 {% block component_line_item_type_product_details_container %}
                                                     <div class="line-item-details-container">
+
+                                                        {# ----------- Product Title ------------------------ #}
                                                         {% block component_line_item_type_product_label %}
                                                             {% sw_include '@Storefront/storefront/component/line-item/element/label.html.twig' with {
                                                                 lineItemLink: displayMode !== 'order' or lineItem.productId ? seoUrl('frontend.detail.page', { productId: lineItem.referencedId }) : null,
@@ -68,12 +72,14 @@
                                                             } %}
                                                         {% endblock %}
 
+                                                        {# ----------- Product Variant Characteristics ------------------------ #}
                                                         {% if lineItem.payload.options is not empty %}
                                                             {% block component_line_item_type_product_variant_characteristics %}
                                                                 {% sw_include '@Storefront/storefront/component/line-item/element/variant-characteristics.html.twig' %}
                                                             {% endblock %}
                                                         {% endif %}
 
+                                                        {# ----------- Product Features ------------------------ #}
                                                         {% if lineItem.payload.features is not empty %}
                                                             {% block component_line_item_type_product_features %}
                                                                 {% sw_include '@Storefront/storefront/component/product/feature/list.html.twig' with {
@@ -82,27 +88,79 @@
                                                             {% endblock %}
                                                         {% endif %}
 
+                                                        {# ----------- Product Referance Number ------------------------ #}
                                                         {% if lineItem.payload.productNumber %}
                                                             {% block component_line_item_type_product_number %}
+                                                                {#
                                                                 <div class="line-item-product-number">
                                                                     {{ 'checkout.cartItemInfoId'|trans|sw_sanitize }} {{ lineItem.payload.productNumber }}
                                                                 </div>
+                                                                #}
                                                             {% endblock %}
                                                         {% endif %}
 
+                                                        {# ----------- Product Quantity ------------------------ #}
+                                                        {% block component_line_item_type_product_col_quantity %}
+                                                                {% sw_include '@Storefront/storefront/component/line-item/element/quantity.html.twig' %}
+                                                        {% endblock %}
+
+
+                                                        {# ----------- Price------------------------  #}
+                                                        {% if showTaxPrice %}
+                                                            {% block component_line_item_type_product_col_tax_price %}
+                                                                <div class="line-item-tax-price">
+                                                                    {% if context.salesChannel.taxCalculationType == 'horizontal' %}
+                                                                        {% sw_include '@Storefront/storefront/component/line-item/element/tax-price.html.twig' %}
+                                                                    {% endif %}
+                                                                </div>
+                                                            {% endblock %}
+
+                                                        {% else %}
+
+                                                            {#                            {% block component_line_item_type_product_col_unit_price %}#}
+                                                            {#                                <div class="{% if lineItem.quantity > 1 %} is-shown{% endif %}">#}
+                                                            {#                                    {% sw_include '@Storefront/storefront/component/line-item/element/unit-price.html.twig' %}#}
+                                                            {#                                </div>#}
+                                                            {#                            {% endblock %}#}
+
+
+                                                            <div class="price-wrapper">
+                                                                {% if showSubtotal %}
+                                                                    {% block component_line_item_type_product_col_total_price %}
+                                                                        <div class="">
+                                                                            {% sw_include '@Storefront/storefront/component/line-item/element/total-price.html.twig' with {
+                                                                                currency: lineItem.order.currency.isoCode
+                                                                            } %}
+                                                                        </div>
+                                                                    {% endblock %}
+                                                                {% endif %}
+
+                                                                {% block component_line_item_type_product_col_unit_price %}
+                                                                    <div class="{% if lineItem.quantity > 1 %} is-shown{% endif %}">
+                                                                        {% sw_include '@Storefront/storefront/component/line-item/element/unit-price.html.twig' %}
+                                                                    </div>
+                                                                {% endblock %}
+                                                            </div>
+
+                                                        {% endif %}
+
+                                                        {# ----------- Delivery Time ------------------------ #}
                                                         {% if config('core.cart.showDeliveryTime') %}
                                                             {% block component_line_item_type_product_delivery_date %}
-                                                                {% sw_include '@Storefront/storefront/component/line-item/element/delivery-date.html.twig' %}
+                                                               {# {% sw_include '@Storefront/storefront/component/line-item/element/delivery-date.html.twig' %} #}
                                                             {% endblock %}
                                                         {% endif %}
 
+                                                        {# ----------- Add to Wishlist ------------------------ #}
                                                         {% if config('core.cart.wishlistEnabled') %}
                                                             {% block component_line_item_type_product_wishlist %}
+                                                            {#
                                                                 {% sw_include '@Storefront/storefront/component/product/card/wishlist.html.twig' with {
-                                                                    showText: true,
-                                                                    size: 'sm',
-                                                                    productId: lineItem.referencedId
+                                                                            showText: true,
+                                                                            size: 'sm',
+                                                                            productId: lineItem.referencedId
                                                                 } %}
+                                                            #}
                                                             {% endblock %}
                                                         {% endif %}
                                                     </div>
@@ -114,50 +172,6 @@
                             </div>
                         {% endblock %}
 
-                        {% block component_line_item_type_product_col_quantity %}
-                            <div class="line-item-quantity">
-                                {% sw_include '@Storefront/storefront/component/line-item/element/quantity.html.twig' %}
-                            </div>
-                        {% endblock %}
-
-                        {% if showTaxPrice %}
-
-                            {% block component_line_item_type_product_col_tax_price %}
-                                <div class="line-item-tax-price">
-                                    {% if context.salesChannel.taxCalculationType == 'horizontal' %}
-                                        {% sw_include '@Storefront/storefront/component/line-item/element/tax-price.html.twig' %}
-                                    {% endif %}
-                                </div>
-                            {% endblock %}
-
-                        {% else %}
-
-{#                            {% block component_line_item_type_product_col_unit_price %}#}
-{#                                <div class="{% if lineItem.quantity > 1 %} is-shown{% endif %}">#}
-{#                                    {% sw_include '@Storefront/storefront/component/line-item/element/unit-price.html.twig' %}#}
-{#                                </div>#}
-{#                            {% endblock %}#}
-
-
-                            <div class="d-flex align-items-center justify-content-between p-0">
-                                {% if showSubtotal %}
-                                    {% block component_line_item_type_product_col_total_price %}
-                                        <div class="">
-                                            {% sw_include '@Storefront/storefront/component/line-item/element/total-price.html.twig' with {
-                                                currency: lineItem.order.currency.isoCode
-                                            } %}
-                                        </div>
-                                    {% endblock %}
-                                {% endif %}
-
-                                {% block component_line_item_type_product_col_unit_price %}
-                                    <div class="{% if lineItem.quantity > 1 %} is-shown{% endif %}">
-                                        {% sw_include '@Storefront/storefront/component/line-item/element/unit-price.html.twig' %}
-                                    </div>
-                                {% endblock %}
-                            </div>
-
-                        {% endif %}
 
                             {#                        {% if showSubtotal %}#}
                             {#                            {% block component_line_item_type_product_col_total_price %}#}
