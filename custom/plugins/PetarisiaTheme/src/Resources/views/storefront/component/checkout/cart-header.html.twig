@@ -27,8 +27,13 @@
             <div class="row cart-header-row">
                 {% block component_checkout_cart_header_product_info %}
                     <div class="col-{{ infoColumnSize }} cart-header-info">
-                        {{ page.cart.lineItems|length|sw_sanitize }}
-                        {{ 'checkout.cartHeaderInfo'|trans|sw_sanitize }}
+                        {% if page.cart.lineItems|length > 1 %}
+                            {{ page.cart.lineItems|length|sw_sanitize }}
+                            {{ 'checkout.cartHeaderInfoPlural'|trans|sw_sanitize }}
+                        {% else %}
+                            {{ page.cart.lineItems|length|sw_sanitize }}
+                            {{ 'checkout.cartHeaderInfo'|trans|sw_sanitize }}
+                        {% endif %}
                     </div>
                 {% endblock %}
 
