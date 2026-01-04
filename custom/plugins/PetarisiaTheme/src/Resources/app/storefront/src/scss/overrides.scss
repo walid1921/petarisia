@@ -339,14 +339,50 @@ input[type="checkbox"] {
 }
 
 
-.cart-main-header {
+
+
+//! product card
+
+.offcanvas-cart-items, .offcanvas-summary {
   margin-bottom: 0 !important;
+  margin-top: 1rem !important;
+  border: 1px solid $sw-border-color !important;
+  background-color: white !important;
+  padding: 15px 10px !important;
 }
 
+.offcanvas-cart-tax{
+  margin-bottom: 1rem !important;
+}
 
-.line-item-details-characteristics {
-  margin: 0 !important;
-  color: $sw-color-brand-secondary;
+.line-item{
+  border: none !important;
+  //background-color: white !important;
+  padding: 10px 0 !important;
+}
+
+// Quantity
+
+.quantity-characteristics-wrapper{
+  width: 220px !important;
+}
+
+.line-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 230px !important;
+}
+
+.line-item-quantity-select-wrapper {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center;
+  padding: 0 !important;
+
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: unset !important;
 }
 
 .line-item-quantity-row {
@@ -354,64 +390,114 @@ input[type="checkbox"] {
   margin-bottom: 0 !important;
 }
 
-.line-item-quantity-select-wrapper{
-  padding: 0 !important;
+// Product details
+.line-item-details-characteristics {
+  margin: 0 !important;
+  color: $sw-color-brand-secondary;
+  font-size: 12px !important;
 }
 
-.line-item-info{
-  padding: 0 !important;
-}
 
-.line-item {
-  padding-top: 0 !important;
-  padding-bottom: 10px !important;
+
+
+
+.line-item-info {
+  display: flex !important;
+  flex: 0 0 auto;
+  width: 80% !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
 }
 
 .line-item-img-container {
   text-align: center;
   width: 100px !important;
-  height: 100px !important;
-  margin-bottom: 0.5rem;
+  height: 100% !important;
+  margin: 0 !important;
 
   .line-item-img {
     width: 100%;
-    height: 100% !important;
+    height: 115px !important;
     object-fit: contain;
-    padding: 0.25rem;
-    border: 1px solid #bbb;
+    padding: 0 !important;
+    border: none !important;
     border-radius: 0;
   }
 }
 
+
 .line-item-details{
-  height: 100px !important;
+  height: 115px !important;
+  width: 220px !important;
   padding: 0 !important;
-}
+  margin-left: 15px !important;
 
-.line-item-details-container{
-  padding: 0 !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100% !important;
-  width: 100%;
-
+  // Product Price
   .price-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100% !important;
-      padding: 0 !important;
+
+    width: 220px !important;
+    //max-width: 400px !important;
+    padding: 0 !important;
+
+    .line-item-total-price-value {
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .line-item-unit-price-value,
+    .line-item-unit-price-value-descriptor {
+      font-size: 12px;
+      color: $sw-color-brand-secondary;
+      white-space: nowrap;
+    }
   }
 }
+
+.line-item-details-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 !important;
+  justify-content: space-between;
+  height: 100% !important;
+  width: 220px !important;;
+}
+
+
+// Product Title
+.line-item-label {
+  color: $sw-color-brand-primary !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
 
 
 /* ===== Compact quantity selector (offcanvas + cart) ===== */
 
+
 .quantity-selector-group {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: 90px;
+
   align-items: center;
-  height: 28px; // total height
+  justify-content: center;
+  height: 28px;
 }
+
+.quantity-selector-group.input-group {
+  flex-wrap: nowrap !important;
+  width: auto !important;
+}
+
 
 .quantity-selector-group .icon {
   display: flex !important;
@@ -475,3 +561,123 @@ input[type="checkbox"] {
 //.quantity-selector-group .btn-outline-light.btn-plus {
 //  border-left: 1px solid $sw-border-color !important;
 //}
+
+
+
+// Delete button
+
+.line-item-remove-button{
+  margin-bottom: 8px;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+  }
+
+.line-item-remove {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+
+  button {
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  svg {
+    width: 15px !important;;
+    height: 15px !important;;
+    margin-bottom: 12px;
+  }
+
+  &:hover {
+    svg {
+      color: $sw-color-danger !important;
+    }
+  }
+}
+
+
+
+
+//! Checkout cart
+
+.checkout {
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  //justify-content: flex-start;
+  //width: 100%;
+}
+
+.checkout-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  //width: 90% !important;
+}
+
+.page_checkout_main_content{
+
+  display: flex;
+  align-items: flex-start;
+  //flex-wrap: wrap;
+  gap: 3rem;
+  width: 100% !important;
+
+  .checkout-main{
+    width: 25% !important;
+  }
+
+  .checkout_cart_shipping {
+    width: 35% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    background-color: white;
+    border: 1px solid $sw-border-color;
+    padding: 30px 35px !important;
+  }
+
+  .cart-shipping-costs-container {
+    align-self: flex-start;
+    width: 100%;
+  }
+
+  .checkout-aside{
+    width: 40% !important;
+  }
+
+}
+
+.cart-main-header {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+
+
+.card-body {
+  border: 1px solid $sw-border-color !important;
+  background-color: white !important;
+  padding: 30px 35px !important;
+  margin-bottom: 0 !important;
+}
+
+.checkout-aside-summary{
+  border: 1px solid $sw-border-color !important;
+  padding: 30px 35px !important;
+}
+
+.checkout-product-table{
+  margin-bottom: 0 !important;
+}
+
+.checkout-aside-summary-list{
+  margin-bottom: 0 !important;
+}

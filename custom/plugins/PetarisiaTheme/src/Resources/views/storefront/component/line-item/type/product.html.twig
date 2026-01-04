@@ -34,12 +34,11 @@
 
         {% block component_line_item_type_product_inner %}
             {% block component_line_item_type_product_row %}
-                <div class="row line-item-row">
+                <div class="d-flex align-items-center">
                     {% block component_line_item_type_product_row_inner %}
                         {% block component_line_item_type_product_col_info %}
                             <div class="line-item-info">
                                 {% block component_line_item_type_product_info_row %}
-                                    <div class="d-flex gap-3">
                                         {% set showLineItemModal = activeRoute is same as('frontend.checkout.confirm.page') %}
 
                                         {# ----------- Image ------------------------ #}
@@ -64,20 +63,25 @@
                                                 {% block component_line_item_type_product_details_container %}
                                                     <div class="line-item-details-container">
 
-                                                        {# ----------- Product Title ------------------------ #}
-                                                        {% block component_line_item_type_product_label %}
-                                                            {% sw_include '@Storefront/storefront/component/line-item/element/label.html.twig' with {
-                                                                lineItemLink: displayMode !== 'order' or lineItem.productId ? seoUrl('frontend.detail.page', { productId: lineItem.referencedId }) : null,
-                                                                lineItemModalLink: showLineItemModal ? path('widgets.quickview.minimal', { productId: lineItem.referencedId }) : false,
-                                                            } %}
-                                                        {% endblock %}
-
-                                                        {# ----------- Product Variant Characteristics ------------------------ #}
-                                                        {% if lineItem.payload.options is not empty %}
-                                                            {% block component_line_item_type_product_variant_characteristics %}
-                                                                {% sw_include '@Storefront/storefront/component/line-item/element/variant-characteristics.html.twig' %}
+                                                        <div class="line-item-header">
+                                                            {# ----------- Product Title ------------------------ #}
+                                                            {% block component_line_item_type_product_label %}
+                                                                {% sw_include '@Storefront/storefront/component/line-item/element/label.html.twig' with {
+                                                                    lineItemLink: displayMode !== 'order' or lineItem.productId ? seoUrl('frontend.detail.page', { productId: lineItem.referencedId }) : null,
+                                                                    lineItemModalLink: showLineItemModal ? path('widgets.quickview.minimal', { productId: lineItem.referencedId }) : false,
+                                                                } %}
                                                             {% endblock %}
-                                                        {% endif %}
+
+                                                            {% if showRemoveButton %}
+                                                                {% block component_line_item_type_product_col_remove %}
+                                                                    <div class="line-item-remove">
+                                                                        {% if lineItem.removable and nestingLevel < 1 %}
+                                                                            {% sw_include '@Storefront/storefront/component/line-item/element/remove.html.twig' %}
+                                                                        {% endif %}
+                                                                    </div>
+                                                                {% endblock %}
+                                                            {% endif %}
+                                                        </div>
 
                                                         {# ----------- Product Features ------------------------ #}
                                                         {% if lineItem.payload.features is not empty %}
@@ -99,10 +103,22 @@
                                                             {% endblock %}
                                                         {% endif %}
 
-                                                        {# ----------- Product Quantity ------------------------ #}
-                                                        {% block component_line_item_type_product_col_quantity %}
-                                                                {% sw_include '@Storefront/storefront/component/line-item/element/quantity.html.twig' %}
-                                                        {% endblock %}
+
+                                                        <div class="d-flex align-items-center justify-content-between quantity-characteristics-wrapper">
+
+
+                                                            {# ----------- Product Quantity ------------------------ #}
+                                                            {% block component_line_item_type_product_col_quantity %}
+                                                                    {% sw_include '@Storefront/storefront/component/line-item/element/quantity.html.twig' %}
+                                                            {% endblock %}
+
+                                                            {# ----------- Product Variant Characteristics ------------------------ #}
+                                                            {% if lineItem.payload.options is not empty %}
+                                                                {% block component_line_item_type_product_variant_characteristics %}
+                                                                    {% sw_include '@Storefront/storefront/component/line-item/element/variant-characteristics.html.twig' %}
+                                                                {% endblock %}
+                                                            {% endif %}
+                                                        </div>
 
 
                                                         {# ----------- Price------------------------  #}
@@ -167,7 +183,6 @@
                                                 {% endblock %}
                                             </div>
                                         {% endblock %}
-                                    </div>
                                 {% endblock %}
                             </div>
                         {% endblock %}
@@ -182,16 +197,6 @@
                             {#                                </div>#}
                             {#                            {% endblock %}#}
                             {#                        {% endif %}#}
-
-                        {% if showRemoveButton %}
-                            {% block component_line_item_type_product_col_remove %}
-                                <div class="line-item-remove">
-                                    {% if lineItem.removable and nestingLevel < 1 %}
-                                        {% sw_include '@Storefront/storefront/component/line-item/element/remove.html.twig' %}
-                                    {% endif %}
-                                </div>
-                            {% endblock %}
-                        {% endif %}
                     {% endblock %}
                 </div>
             {% endblock %}
