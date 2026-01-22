@@ -11,171 +11,180 @@
         <div class="checkout">
             {% block page_checkout_container %}
 
+                {% set route = app.request.attributes.get('_route') %}
+                {% block page_checkout_header %}
+                    {% if route == 'frontend.checkout.cart.page' %}
+                            <h1 class="cart-main-header d-flex justify-content-center w-100 mt-3">
+                                {{ 'checkout.cartHeader'|trans|sw_sanitize }}
+                            </h1>
+
+                    {% elseif  route == 'frontend.checkout.confirm.page' %}
+
+                            <h1 class="checkout-main-header d-flex justify-content-center w-100 mt-3">
+                                {{ 'checkout.confirmHeader'|trans|sw_sanitize }}
+                            </h1>
+
+                    {% elseif route == 'frontend.checkout.finish.page' %}
+
+                            <h1 class="checkout-finish-header d-flex justify-content-center w-100 mt-3">
+                                {{ 'checkout.finishHeader'|trans|sw_sanitize }}
+                            </h1>
+                    {% endif %}
+                {% endblock %}
+
+
+                {% sw_include '@Storefront/storefront/component/checkout/steps.html.twig' %}
+
                 <div class="checkout-body">
 
-                <h1 class="cart-main-header d-inline-block mb-0">
-                    {{ 'checkout.cartHeader'|trans|sw_sanitize }}
-                </h1>
 
-                {# Shopping cart header #}
-{#                {% block page_checkout_cart_header %}#}
-{#                    <div class="d-flex flex-column gap-1">#}
-{#                        <h1 class="cart-main-header d-inline-block mb-0">#}
-{#                            {{ 'checkout.cartHeader'|trans|sw_sanitize }}#}
-{#                        </h1>#}
-{#                        #}{# <p class="cart-main-header-item-counter d-inline-block mb-4 fw-semibold fs-5 ms-1 text-secondary ">#}
-{#                    You have <span class="text-decoration-underline">{{- 'checkout.itemCounter'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize -}}</span> to buy#}
-{#                </p>  #}
-{#                    </div>#}
-{#                {% endblock %}#}
+                    <div class="page_checkout_main_content ">
 
-                <div class="page_checkout_main_content">
+                        {# Products Table #}
+                        {% block page_checkout_main %}
+                            <div class="checkout-main">
+                                {% block base_flashbags_checkout %}
+                                    <div class="flashbags">
+                                        {% for type, messages in app.flashes %}
+                                            {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with
+                                                { type: type,
+                                                    list: messages,
+                                                }
+                                            %}
+                                        {% endfor %}
+                                    </div>
+                                {% endblock %}
 
-                    {# Products Table #}
-                    {% block page_checkout_main %}
-                        <div class="checkout-main">
-                            {% block base_flashbags_checkout %}
-                                <div class="flashbags">
-                                    {% for type, messages in app.flashes %}
-                                        {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with
-                                            { type: type,
-                                                list: messages,
-                                            }
-                                        %}
-                                    {% endfor %}
-                                </div>
-                            {% endblock %}
+                                {% block page_checkout_main_content %}
 
-                            {% block page_checkout_main_content %}
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
 
-                            {% endblock %}
-                        </div>
-                    {% endblock %}
+                        {# Shipping #}
+                        {% block page_checkout_cart_shippingg %}
+{#                            <div class="checkout_cart_shipping">#}
 
-                    {# Shipping #}
-                    {% block page_checkout_cart_shippingg %}
-                        <div class="checkout_cart_shipping">
+{#                                 Open shipping details#}
+{#                                <div class="cart-shipping-costs-container">#}
+{#                                        <form name="precalc"#}
+{#                                              method="post"#}
+{#                                              action="{{ path('frontend.checkout.configure') }}"#}
+{#                                              data-form-auto-submit="true">#}
 
-                            {# Open shipping details #}
-                            <div class="cart-shipping-costs-container">
-                                    <form name="precalc"
-                                          method="post"
-                                          action="{{ path('frontend.checkout.configure') }}"
-                                          data-form-auto-submit="true">
-
-{#                                            {% set PHYSICAL_STATE = constant('Shopware\\Core\\Content\\Product\\State::IS_PHYSICAL') %}#}
-{#                                            {% if page.cart.lineItems.hasLineItemWithState(PHYSICAL_STATE) %}#}
-{#                                                <a class="btn btn-link cart-shipping-costs-btn"#}
-{#                                                   data-bs-toggle="collapse"#}
-{#                                                   href="#collapseShippingCost"#}
-{#                                                   role="button"#}
-{#                                                   aria-expanded="false"#}
-{#                                                   aria-controls="collapseShippingCost">#}
-{#                                                    {{ 'checkout.shippingCosts'|trans|sw_sanitize }}#}
-{#                                                </a>#}
-{#                                            {% endif %}#}
+{#                                                {% set PHYSICAL_STATE = constant('Shopware\\Core\\Content\\Product\\State::IS_PHYSICAL') %}#}
+{#                                                {% if page.cart.lineItems.hasLineItemWithState(PHYSICAL_STATE) %}#}
+{#                                                    <a class="btn btn-link cart-shipping-costs-btn"#}
+{#                                                       data-bs-toggle="collapse"#}
+{#                                                       href="#collapseShippingCost"#}
+{#                                                       role="button"#}
+{#                                                       aria-expanded="false"#}
+{#                                                       aria-controls="collapseShippingCost">#}
+{#                                                        {{ 'checkout.shippingCosts'|trans|sw_sanitize }}#}
+{#                                                    </a>#}
+{#                                                {% endif %}#}
 
 
 
-                                            <div class="collapse-" id="collapseShippingCost">
-                                                {% block page_checkout_cart_shipping_costs_form_group_country %}
-                                                    {% if not context.customer %}
-                                                        <div class="form-group">
-                                                            <label for="countryId">{{ 'checkout.shippingCountry'|trans|sw_sanitize }}</label>
-                                                            <select class="form-select" type="text" id="countryId" name="countryId">
-                                                                {% for country in page.countries %}
-                                                                    <option value="{{ country.id }}"
-                                                                            {{ country.id == context.shippingLocation.country.id ? 'selected="selected"' : '' }}>
-                                                                        {{ country.translated.name }}
-                                                                    </option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                    {% endif %}
+{#                                                <div class="collapse-" id="collapseShippingCost">#}
+{#                                                    {% block page_checkout_cart_shipping_costs_form_group_country %}#}
+{#                                                        {% if not context.customer %}#}
+{#                                                            <div class="form-group">#}
+{#                                                                <label for="countryId">{{ 'checkout.shippingCountry'|trans|sw_sanitize }}</label>#}
+{#                                                                <select class="form-select" type="text" id="countryId" name="countryId">#}
+{#                                                                    {% for country in page.countries %}#}
+{#                                                                        <option value="{{ country.id }}"#}
+{#                                                                                {{ country.id == context.shippingLocation.country.id ? 'selected="selected"' : '' }}>#}
+{#                                                                            {{ country.translated.name }}#}
+{#                                                                        </option>#}
+{#                                                                    {% endfor %}#}
+{#                                                                </select>#}
+{#                                                            </div>#}
+{#                                                        {% endif %}#}
+{#                                                    {% endblock %}#}
+
+{#                                                    {% block page_checkout_cart_shipping_costs_form_group_payment_method %}#}
+{#                                                        <div class="form-group">#}
+{#                                                            <label for="paymentMethodId">{{ 'checkout.paymentMethod'|trans|sw_sanitize }}</label>#}
+{#                                                            <select class="form-select" type="text" id="paymentMethodId" name="paymentMethodId">#}
+{#                                                                {% if context.paymentMethod.id not in page.paymentMethods.ids %}#}
+{#                                                                    <option value="{{ context.paymentMethod.id }}"#}
+{#                                                                            selected="selected"#}
+{#                                                                            disabled="disabled">#}
+{#                                                                        {{ context.paymentMethod.translated.name }} {{ 'checkout.notAvailableSuffix'|trans|sw_sanitize }}#}
+{#                                                                    </option>#}
+{#                                                                {% endif %}#}
+{#                                                                {% for payment in page.paymentMethods %}#}
+{#                                                                    <option value="{{ payment.id }}"#}
+{#                                                                            {% if payment.id == context.paymentMethod.id %} selected="selected"{% endif %}>#}
+{#                                                                        {{ payment.translated.name }}#}
+{#                                                                    </option>#}
+{#                                                                {% endfor %}#}
+{#                                                            </select>#}
+{#                                                        </div>#}
+{#                                                    {% endblock %}#}
+
+{#                                                    {% block page_checkout_cart_shipping_costs_form_group_shipping_method %}#}
+{#                                                        <div class="form-group">#}
+{#                                                            <label for="shippingMethodId">{{ 'checkout.shippingMethod'|trans|sw_sanitize }}</label>#}
+{#                                                            <select class="form-select" type="text" id="shippingMethodId" name="shippingMethodId">#}
+{#                                                                {% if context.shippingMethod.id not in page.shippingMethods.ids %}#}
+{#                                                                    <option value="{{ context.shippingMethod.id }}"#}
+{#                                                                            selected="selected"#}
+{#                                                                            disabled="disabled">#}
+{#                                                                        {{ context.shippingMethod.translated.name }} {{ 'checkout.notAvailableSuffix'|trans|sw_sanitize }}#}
+{#                                                                    </option>#}
+{#                                                                {% endif %}#}
+{#                                                                {% for shipping in page.shippingMethods %}#}
+{#                                                                    <option value="{{ shipping.id }}"#}
+{#                                                                            {% if shipping.id == context.shippingMethod.id %} selected="selected"{% endif %}>#}
+{#                                                                        {{ shipping.translated.name }}#}
+{#                                                                    </option>#}
+{#                                                                {% endfor %}#}
+{#                                                            </select>#}
+{#                                                        </div>#}
+{#                                                    {% endblock %}#}
+
+{#                                                    <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">#}
+{#                                                </div>#}
+
+{#                                        </form>#}
+{#                                    </div>#}
+
+{#                            </div>#}
+                        {% endblock %}
+
+                        {% block page_checkout_additional %}{% endblock %}
+
+                        {# Summary Card #}
+                        {% block page_checkout_aside %}
+                            <div class="checkout-aside {% if sw_block('page_checkout_additional')|trim %}checkout-aside-no-offset{% endif %}">
+                                {% block page_checkout_aside_container %}
+                                    <div class="checkout-aside-container">
+                                        {% block page_checkout_aside_summary %}
+                                            <div class="checkout-aside-summary">
+                                                {% block page_checkout_summary_header %}
+                                                    <h2 class="checkout-aside-summary-header">
+                                                        {{ 'checkout.summaryHeader'|trans|sw_sanitize }}
+                                                    </h2>
                                                 {% endblock %}
 
-                                                {% block page_checkout_cart_shipping_costs_form_group_payment_method %}
-                                                    <div class="form-group">
-                                                        <label for="paymentMethodId">{{ 'checkout.paymentMethod'|trans|sw_sanitize }}</label>
-                                                        <select class="form-select" type="text" id="paymentMethodId" name="paymentMethodId">
-                                                            {% if context.paymentMethod.id not in page.paymentMethods.ids %}
-                                                                <option value="{{ context.paymentMethod.id }}"
-                                                                        selected="selected"
-                                                                        disabled="disabled">
-                                                                    {{ context.paymentMethod.translated.name }} {{ 'checkout.notAvailableSuffix'|trans|sw_sanitize }}
-                                                                </option>
-                                                            {% endif %}
-                                                            {% for payment in page.paymentMethods %}
-                                                                <option value="{{ payment.id }}"
-                                                                        {% if payment.id == context.paymentMethod.id %} selected="selected"{% endif %}>
-                                                                    {{ payment.translated.name }}
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
+                                                {% block page_checkout_summary_list %}
+                                                    <div class="checkout-aside-summary-list-container">
+                                                        {% block page_checkout_summary_list_container %}
+                                                            {% sw_include '@Storefront/storefront/page/checkout/summary.html.twig' %}
+                                                        {% endblock %}
                                                     </div>
                                                 {% endblock %}
-
-                                                {% block page_checkout_cart_shipping_costs_form_group_shipping_method %}
-                                                    <div class="form-group">
-                                                        <label for="shippingMethodId">{{ 'checkout.shippingMethod'|trans|sw_sanitize }}</label>
-                                                        <select class="form-select" type="text" id="shippingMethodId" name="shippingMethodId">
-                                                            {% if context.shippingMethod.id not in page.shippingMethods.ids %}
-                                                                <option value="{{ context.shippingMethod.id }}"
-                                                                        selected="selected"
-                                                                        disabled="disabled">
-                                                                    {{ context.shippingMethod.translated.name }} {{ 'checkout.notAvailableSuffix'|trans|sw_sanitize }}
-                                                                </option>
-                                                            {% endif %}
-                                                            {% for shipping in page.shippingMethods %}
-                                                                <option value="{{ shipping.id }}"
-                                                                        {% if shipping.id == context.shippingMethod.id %} selected="selected"{% endif %}>
-                                                                    {{ shipping.translated.name }}
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                {% endblock %}
-
-                                                <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
                                             </div>
+                                        {% endblock %}
 
-                                    </form>
-                                </div>
-
-                        </div>
-                    {% endblock %}
-
-                    {% block page_checkout_additional %}{% endblock %}
-
-                    {# Summary Card #}
-                    {% block page_checkout_aside %}
-                        <div class="checkout-aside {% if sw_block('page_checkout_additional')|trim %}checkout-aside-no-offset{% endif %}">
-                            {% block page_checkout_aside_container %}
-                                <div class="checkout-aside-container">
-                                    {% block page_checkout_aside_summary %}
-                                        <div class="checkout-aside-summary">
-                                            {% block page_checkout_summary_header %}
-                                                <h2 class="checkout-aside-summary-header">
-                                                    {{ 'checkout.summaryHeader'|trans|sw_sanitize }}
-                                                </h2>
-                                            {% endblock %}
-
-                                            {% block page_checkout_summary_list %}
-                                                <div class="checkout-aside-summary-list-container">
-                                                    {% block page_checkout_summary_list_container %}
-                                                        {% sw_include '@Storefront/storefront/page/checkout/summary.html.twig' %}
-                                                    {% endblock %}
-                                                </div>
-                                            {% endblock %}
-                                        </div>
-                                    {% endblock %}
-
-                                    {% block page_checkout_aside_actions %}{% endblock %}
-                                </div>
-                            {% endblock %}
-                        </div>
-                    {% endblock %}
-                </div>
+                                        {% block page_checkout_aside_actions %}{% endblock %}
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
                 </div>
             {% endblock %}
         </div>

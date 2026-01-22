@@ -185,7 +185,7 @@
                     {# Checkout Button #}
                     {% block component_offcanvas_cart_actions_checkout %}
                         {% if isCartNotEmpty %}
-                            <div class="d-flex align-items-center justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center mb-5">
                                 <a href="{{ path('frontend.checkout.confirm.page') }}"
                                    class="btn w-100 begin-checkout-btn{% if isCartNotEmpty %} button-primary{% else %} btn-light disabled{% endif %}"
                                    title="{{ 'checkout.proceedToCheckout'|trans|striptags }}">

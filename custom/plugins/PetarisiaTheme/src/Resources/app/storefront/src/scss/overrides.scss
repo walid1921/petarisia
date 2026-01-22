@@ -226,7 +226,7 @@ input[type="checkbox"] {
   align-self: center;
   font-size: inherit;
   overflow: visible;
-  color: $sw-color-brand-primary !important;
+  //color: $sw-color-brand-primary !important;
   //height: 100% !important;
 }
 
@@ -604,11 +604,12 @@ input[type="checkbox"] {
 //! Checkout cart
 
 .checkout {
-  //display: flex;
-  //flex-direction: column;
-  //align-items: center;
-  //justify-content: flex-start;
-  //width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding-top: 0 !important;
 }
 
 .checkout-body {
@@ -627,9 +628,13 @@ input[type="checkbox"] {
   //flex-wrap: wrap;
   gap: 3rem;
   width: 100% !important;
+  height: 60vh !important;
 
   .checkout-main{
-    width: 25% !important;
+    width: 50% !important;
+    height: 100% !important;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .checkout_cart_shipping {
@@ -649,8 +654,9 @@ input[type="checkbox"] {
   }
 
   .checkout-aside{
-    width: 40% !important;
+    width: 50% !important;
   }
+
 
 }
 
@@ -661,7 +667,6 @@ input[type="checkbox"] {
   margin-bottom: 0 !important;
 }
 
-
 .card-body {
   border: 1px solid $sw-border-color !important;
   background-color: white !important;
@@ -669,9 +674,19 @@ input[type="checkbox"] {
   margin-bottom: 0 !important;
 }
 
+.cart-table-header--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  padding-top: 30px;
+  margin-bottom: 10px;
+}
+
 .checkout-aside-summary{
   border: 1px solid $sw-border-color !important;
   padding: 30px 35px !important;
+  background-color: white !important;
 }
 
 .checkout-product-table{
