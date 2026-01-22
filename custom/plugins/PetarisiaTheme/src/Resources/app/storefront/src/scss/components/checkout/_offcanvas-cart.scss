@@ -86,3 +86,36 @@
   opacity: 0.85;
   margin-bottom: 0.5rem;
 }
+
+//
+
+//
+//
+///* Make the main cart area behave like a viewport */
+//.checkout-layout-viewport {
+//  height: 100vh;
+//  display: flex;
+//}
+//
+///* Ensure the left side (checkout main) can shrink and allow inner scrolling */
+//.checkout-layout-viewport .checkout-main {
+//  flex: 1 1 auto;
+//  min-width: 0;
+//  min-height: 0; // IMPORTANT for nested overflow
+//  display: flex;
+//  flex-direction: column;
+//}
+//
+///* Scroll container for the product table */
+//.cart-product-table-scroll {
+//  flex: 1 1 auto;
+//  min-height: 0;      // IMPORTANT for overflow to work in flex children
+//  overflow-y: auto;
+//  overflow-x: hidden;
+//}
+//
+///* Optional: keep the summary (aside) visible and not stretching weirdly */
+//.checkout-layout-viewport .checkout-aside {
+//  flex: 0 0 360px; // adjust to your design
+//  align-self: flex-start;
+//}

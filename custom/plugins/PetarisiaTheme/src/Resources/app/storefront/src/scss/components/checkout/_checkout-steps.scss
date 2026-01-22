@@ -1,0 +1,111 @@
+.sw-checkout-steps {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.sw-checkout-steps__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  align-items: center;
+  margin: 0;
+  padding: 0 18px;
+  position: relative;
+}
+
+.sw-checkout-steps__item {
+  position: relative;
+  text-align: center;
+  padding: 0 6px;
+}
+
+.sw-checkout-steps__item::before {
+  content: "";
+  position: absolute;
+  top: 23px; /* half of 46px */
+  left: -50%;
+  width: 100%;
+  height: 2px;
+  background: #d7d7d7;
+  z-index: 0;
+}
+
+.sw-checkout-steps__item:first-child::before {
+  display: none;
+}
+
+.sw-checkout-steps__dot {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $sw-border-color;
+  background: #fff;
+  position: relative;
+  z-index: 1;
+  line-height: 0 !important;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 100%;
+      height: 100%;
+      top: 0 !important;
+      color: $sw-border-color !important;
+    }
+  }
+}
+
+.sw-checkout-steps__label {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.2;
+  color: $sw-color-brand-secondary;
+  white-space: nowrap;
+}
+
+/* Active step */
+.sw-checkout-steps__item.is-active .sw-checkout-steps__dot {
+  border-color: $sw-color-brand-primary;
+
+  .icon {
+    svg {
+      color: $sw-color-brand-primary !important;
+    }
+  }
+}
+
+.sw-checkout-steps__item.is-active .sw-checkout-steps__label {
+  color: $sw-color-brand-primary;
+  font-weight: 600;
+}
+
+/* Done steps */
+.sw-checkout-steps__item.is-done::before {
+  background: $sw-color-brand-primary;
+}
+.sw-checkout-steps__item.is-active::before {
+  background: $sw-color-brand-primary;
+}
+
+.sw-checkout-steps__item.is-done .sw-checkout-steps__dot {
+  background: $sw-color-brand-primary;
+  border-color: $sw-color-brand-primary;
+
+  .icon {
+    svg {
+      color: #fff !important;
+    }
+  }
+}
+
+.sw-checkout-steps__item.is-done .sw-checkout-steps__label {
+  color: $sw-color-brand-primary;
+}

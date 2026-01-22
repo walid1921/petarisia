@@ -22,17 +22,15 @@
     {% set infoColumnClass = 'col-' ~ infoColumnSize %}
 
     {% block component_checkout_cart_header_element %}
-        <li class="card-title cart-table-header" aria-hidden="true">
+        <li class="card-title cart-table-header cart-table-header--sticky" aria-hidden="true">
 
             <div class="row cart-header-row">
+                {% set checkoutItemCounter = page.cart.lineItems|length %}
                 {% block component_checkout_cart_header_product_info %}
-                    <div class="col-{{ infoColumnSize }} cart-header-info">
-                        {% if page.cart.lineItems|length > 1 %}
-                            {{ page.cart.lineItems|length|sw_sanitize }}
+                    <div class="col-{{ infoColumnSize }} cart-header-info position-relative">
+                        {% if page.cart.lineItems|length > 0 %}
                             {{ 'checkout.cartHeaderInfoPlural'|trans|sw_sanitize }}
-                        {% else %}
-                            {{ page.cart.lineItems|length|sw_sanitize }}
-                            {{ 'checkout.cartHeaderInfo'|trans|sw_sanitize }}
+                            <span class="badge checkout-cart">{{ checkoutItemCounter }}</span>
                         {% endif %}
                     </div>
                 {% endblock %}
