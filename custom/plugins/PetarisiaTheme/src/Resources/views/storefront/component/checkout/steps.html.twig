@@ -33,9 +33,9 @@
 {#] %}#}
 
 {% set steps = [
-    { key: 'order', label: 'Your Order', index: 1, icon: 'bag', link: path('frontend.checkout.cart.page') },
-    { key: 'confirm', label: 'Checkout', index: 2, icon: 'money-card', link: path('frontend.checkout.confirm.page') },
-    { key: 'done', label: 'Order complete', index: 3, icon: 'checkmark', link: path('frontend.checkout.finish.page') }
+    { key: 'order', label: 'checkout.stepYourOrder'|trans|sw_sanitize, index: 1, icon: 'bag', link: path('frontend.checkout.cart.page') },
+    { key: 'confirm', label: 'checkout.stepCheckoutDetails'|trans|sw_sanitize, index: 2, icon: 'money-card', link: path('frontend.checkout.confirm.page') },
+    { key: 'done', label: 'checkout.stepFinished'|trans|sw_sanitize, index: 3, icon: 'checkmark', link: null }
 ] %}
 
 
@@ -44,23 +44,36 @@
         {% for step in steps %}
             {% set isDone = step.index < currentStep %}
             {% set isActive = step.index == currentStep %}
-            {% set isOrdered = step.key == 'done' %}
+            {% set isFinish = step.key == 'done' %}
+            {% set hasLink = step.link is not empty %}
+            {% set canClick = hasLink %}
 
             <li class="sw-checkout-steps__item
                 {{ isDone ? 'is-done' : '' }}
                 {{ isActive ? 'is-active' : '' }}
                 {{ route == 'frontend.checkout.finish.page' ? 'is-done' : '' }}
             ">
-                <a  href="{{ step.link }}"
-                    class="sw-checkout-steps__dot" aria-hidden="true">
-                    {% if isDone or route == 'frontend.checkout.finish.page' %}
-                        {% sw_icon 'checkmark' %}
-                    {% else %}
-                        {% sw_icon  step.icon style {
-                            'size': 'sm'
-                        } %}
-                    {% endif %}
-                </a>
+                {% if canClick %}
+                    <a  href="{{ step.link }}"
+                        class="sw-checkout-steps__dot" aria-hidden="true">
+                        {% if isDone %}
+                            {% sw_icon 'checkmark' %}
+                        {% else %}
+                            {% sw_icon  step.icon style {
+                                'size': 'sm'
+                            } %}
+                        {% endif %}
+                    </a>
+                {% else %}
+                    {# don’t render an <a> tag when there’s no link (it’ll output href="" or break) so render span instead  #}
+                    <span class="sw-checkout-steps__dot is-disabled" aria-hidden="true" tabindex="-1">
+                        {% if isDone %}
+                            {% sw_icon 'checkmark' %}
+                        {% else %}
+                            {% sw_icon step.icon style { 'size': 'sm' } %}
+                        {% endif %}
+                    </span>
+                {% endif %}
 
                 <span class="sw-checkout-steps__label">{{ step.label }}</span>
             </li>

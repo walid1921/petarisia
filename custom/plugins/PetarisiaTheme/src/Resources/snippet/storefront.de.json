@@ -506,12 +506,12 @@
     "confirmRevocationReminder": "Sie haben bereits erklärt, dass Sie auf das Widerrufsrecht verzichten.",
     "finishInfoPayment": "Zahlungsart:",
     "finishInfoShipping": "Versandart:",
-    "finishHeader": "Vielen Dank für Ihre Bestellung bei %shop%!",
+    "finishHeader": "Vielen Dank für Ihre Bestellung!",
     "finishMetaTitle": "Bestellung abgeschlossen",
     "finishUpdateHeader": "Vielen Dank für die Aktualisierung Ihrer Bestellung!",
     "finishPaymentHeader": "Die Zahlungsart Ihrer Bestellung wurde zu \"%paymentName%\" geändert!",
     "finishInfoHeader": "Informationen",
-    "finishInfoOrdernumber": "Ihre Bestellnummer:",
+    "finishInfoOrdernumber": "Ihre Bestellnummer ist: #",
     "finishInfoConfirmationMail": "Bestellbestätigungs-E-Mail wurde verschickt.",
     "finishButtonBackToShop": "Zurück zum Shop",
     "finishChangePayment": "Zahlungsart ändern",
@@ -528,7 +528,10 @@
     "customerCommentPlaceholder": "Kommentieren Sie hier ...",
     "cart-merged-hint": "Der aktuelle Warenkorb enthält u.U. zusätzliche Produkte, die noch von einem früheren Besuch gespeichert waren.",
     "collapseTriggerMore": "Mehr zeigen",
-    "collapseTriggerLess": "Weniger zeigen"
+    "collapseTriggerLess": "Weniger zeigen",
+    "stepYourOrder": "Your order",
+    "stepCheckoutDetails": "Checkout details",
+    "stepFinished": "Finished"
   },
   "listing": {
     "filterTitleText": "Produkte filtern",

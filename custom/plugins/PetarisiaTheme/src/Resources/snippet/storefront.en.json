@@ -507,12 +507,12 @@
     "confirmRevocationReminder": "You have already declared that you waive the right of withdrawal.",
     "finishInfoPayment": "Payment method:",
     "finishInfoShipping": "Shipping method:",
-    "finishHeader": "Thank you for your order with %shop%!",
+    "finishHeader": "Thank you for your order!",
     "finishMetaTitle": "Order finished",
     "finishUpdateHeader": "Thank you for updating your order!",
     "finishPaymentHeader": "Your order's payment method has been changed to %paymentName%!",
     "finishInfoHeader": "Information",
-    "finishInfoOrdernumber": "Your order number: #",
+    "finishInfoOrdernumber": "Your order number is: #",
     "finishInfoConfirmationMail": "Order confirmation email has been sent.",
     "finishButtonBackToShop": "Back to shop",
     "finishChangePayment": "Change payment method",
@@ -529,7 +529,10 @@
     "customerCommentPlaceholder": "Comment here...",
     "cart-merged-hint": "The current shopping cart might contain additional products that have been added and saved during a previous visit.",
     "collapseTriggerMore": "Show more",
-    "collapseTriggerLess": "Show less"
+    "collapseTriggerLess": "Show less",
+    "stepYourOrder": "Your order",
+    "stepCheckoutDetails": "Checkout details",
+    "stepFinished": "Finished"
   },
   "listing": {
     "filterTitleText": "Filter products",

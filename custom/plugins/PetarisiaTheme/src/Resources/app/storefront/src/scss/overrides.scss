@@ -364,14 +364,14 @@ input[type="checkbox"] {
 // Quantity
 
 .quantity-characteristics-wrapper{
-  width: 220px !important;
+  width: 100% !important;
 }
 
 .line-item-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 230px !important;
+  width: 100% !important;
 }
 
 .line-item-quantity-select-wrapper {
@@ -429,7 +429,7 @@ input[type="checkbox"] {
 
 .line-item-details{
   height: 115px !important;
-  width: 220px !important;
+  width: 100% !important;
   padding: 0 !important;
   margin-left: 15px !important;
 
@@ -439,9 +439,10 @@ input[type="checkbox"] {
     align-items: center;
     justify-content: space-between;
 
-    width: 220px !important;
+    width: 100% !important;
+
     //max-width: 400px !important;
-    padding: 0 !important;
+    padding: 0 10px 0 0 !important;
 
     .line-item-total-price-value {
       font-weight: 600;
@@ -455,6 +456,7 @@ input[type="checkbox"] {
       color: $sw-color-brand-secondary;
       white-space: nowrap;
     }
+
   }
 }
 
@@ -465,7 +467,7 @@ input[type="checkbox"] {
   padding: 0 !important;
   justify-content: space-between;
   height: 100% !important;
-  width: 220px !important;;
+  width: 100% !important;;
 }
 
 
@@ -476,7 +478,9 @@ input[type="checkbox"] {
   text-decoration: none !important;
 }
 
-
+.is-shown {
+  display: none !important;
+}
 
 /* ===== Compact quantity selector (offcanvas + cart) ===== */
 

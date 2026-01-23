@@ -1,7 +1,7 @@
 .sw-checkout-steps {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 50%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 60%;
 }
 
 .sw-checkout-steps__list {
@@ -48,6 +48,8 @@
   position: relative;
   z-index: 1;
   line-height: 0 !important;
+  transition: border-color 0.3s ease-in-out;
+
 
   .icon {
     display: flex;
@@ -58,6 +60,17 @@
       height: 100%;
       top: 0 !important;
       color: $sw-border-color !important;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    border: 1px solid $sw-color-brand-primary;
+
+    .icon {
+      svg {
+        color: $sw-color-brand-primary !important;
+      }
     }
   }
 }
@@ -108,4 +121,9 @@
 
 .sw-checkout-steps__item.is-done .sw-checkout-steps__label {
   color: $sw-color-brand-primary;
+}
+
+.sw-checkout-steps__dot.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
 }
