@@ -30,7 +30,8 @@
         "type": "media",
         "value": "",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 590,
         "fullWidth": true,
         "label": {
@@ -41,7 +42,8 @@
         "type": "bool",
         "value": true,
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 600,
         "label": {
           "en-GB": "Enable Bags card"
@@ -50,7 +52,8 @@
       "offcanvas-bags-link": {
         "type": "text",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 610,
         "scss": false,
         "label": {
@@ -60,18 +63,19 @@
       "offcanvas-bags-title": {
         "type": "text",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 620,
         "scss": false,
         "label": {
           "en-GB": "Bags title"
         }
       },
-
       "offcanvas-bags-description": {
         "type": "text",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 630,
         "scss": false,
         "label": {
@@ -82,7 +86,8 @@
         "type": "media",
         "value": "",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 690,
         "fullWidth": true,
         "label": {
@@ -93,7 +98,8 @@
         "type": "bool",
         "value": true,
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 700,
         "label": {
           "en-GB": "Enable Accessories card"
@@ -102,7 +108,8 @@
       "offcanvas-accessories-link": {
         "type": "text",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 710,
         "scss": false,
         "label": {
@@ -112,23 +119,92 @@
       "offcanvas-accessories-title": {
         "type": "text",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 720,
         "scss": false,
         "label": {
           "en-GB": "Accessories title"
         }
       },
-
       "offcanvas-accessories-description": {
         "type": "text",
         "editable": true,
-        "block": "Checkout cart",
+        "tab": "Checkout cart",
+        "block": "Empty cart",
         "order": 730,
         "scss": false,
         "label": {
           "en-GB": "Accessories description"
         }
+      },
+
+
+      "pt-info-top-bar-background": {
+        "label": {
+          "en-GB": "Background colour",
+          "de-DE": "Background colour"
+        },
+        "type": "color",
+        "value": "",
+        "editable": true,
+        "tab": "Info Top Bar",
+        "block": "Theme colours"
+      },
+      "pt-info-top-bar-text": {
+        "label": {
+          "en-GB": "Text colour",
+          "de-DE": "Text colour"
+        },
+        "type": "color",
+        "value": "",
+        "editable": true,
+        "tab": "Info Top Bar",
+        "block": "Theme colours"
+      },
+      "pt-info-top-bar-text-1": {
+        "label": {
+          "en-GB": "Text 1",
+          "de-DE": "Inhalt"
+        },
+        "type": "text",
+        "value": "",
+        "editable": true,
+        "tab": "Info Top Bar",
+        "block": "Section 1"
+      },
+      "pt-info-top-bar-icon-1": {
+        "label": {
+          "en-GB": "Text 1",
+          "de-DE": "Inhalt"
+        },
+        "type": "",
+        "value": "",
+        "editable": true,
+        "tab": "Info Top Bar",
+        "block": "Section 1"
+      },
+      "pt-info-top-bar-text-2": {
+        "label": {
+          "en-GB": "Text 2",
+          "de-DE": "Inhalt"
+        },
+        "type": "text",
+        "value": "",
+        "editable": true,
+        "tab": "Info Top Bar",
+        "block": "Section 2"
+      },
+      "pt-info-top-bar-text-3": {
+        "label": {
+          "en-GB": "Text 3",
+          "de-DE": "Inhalt"
+        },
+        "type": "text",
+        "value": "",
+        "editable": true,
+        "tab": "Info Top Bar",
+        "block": "Section 3"
       }
     }
   }
