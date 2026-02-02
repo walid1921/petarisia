@@ -60,96 +60,70 @@
                 </div>
             {% endblock %}
 
-            <div>
-                {# Motivation progress bar (storefront-only, values hardcoded for now) #}
-                {% set currentTotal = page.cart.price.totalPrice ?? 0 %}
 
-                {# Goals (we’ll make these configurable in Admin later) #}
-                {% set goals = [
-                    { key: 'freeShipping', amount: 50, label: 'Free shipping', icon: 'truck' },
-                    { key: 'discount10', amount: 100, label: '10% discount', icon: 'percent' }
-                ] %}
 
-                {% set maxGoal = goals|last.amount %}
-                {% set progressPct = maxGoal > 0 ? ((currentTotal / maxGoal) * 100) : 0 %}
-                {% set progressPct = progressPct > 100 ? 100 : progressPct %}
+            {# Motivation Progress bar #}
+            {% set currentTotal = page.cart.price.totalPrice ?? 0  %}
+            {# To see the total price {{ dump(currentTotal) }} #}
 
-                {# Find next goal #}
-                {% set nextGoal = null %}
-                {% for g in goals %}
-                    {% if currentTotal < g.amount and nextGoal is null %}
-                        {% set nextGoal = g %}
-                    {% endif %}
-                {% endfor %}
+            {# Hardcoded goals for now (later: Admin config) #}
+            {% set goals = [
+                { amount: 50, label: 'Free shipping' },
+                { amount: 70, label: 'Free gift' },
+                { amount: 100, label: '10% discount' },
+            ] %}
 
-                {% if nextGoal %}
-                    {% set remaining = nextGoal.amount - currentTotal %}
-                    {% set headlineText = 'You only need %amount% for %label%!' %}
-                    {% set headlineText = headlineText|replace({
-                        '%amount%': remaining|currency,
-                        '%label%': nextGoal.label
-                    }) %}
-                {% else %}
-                    {% set headlineText = 'Nice! You unlocked all rewards 🎉' %}
-                {% endif %}
+            {# The “max” goal defines 100% #}
+            {% set maxGoal = goals|last.amount %}
+            {% set progressPct = maxGoal > 0 ? ((currentTotal / maxGoal) * 100) : 0 %}
+            {% set progressPct = progressPct > 100 ? 100 : progressPct %}
 
-                <div class="mpb"
-                     data-motivation-progress="true"
-                     data-current="{{ currentTotal }}"
-                     data-max="{{ maxGoal }}"
-                     data-progress="{{ progressPct }}">
+            {% set headlineText = "You only need €11.00 for 10% discount!" %}
 
-                    <div class="mpb__trackWrap">
-                        <div class="mpb__track">
-                            <div class="mpb__fill" style="width: {{ progressPct }}%"></div>
+            <div class="motivation-bar"
+                 data-motivation-bar
+                 data-current-total="{{ currentTotal }}"
+                 data-max-goal="{{ maxGoal }}"
+                 data-progress="{{ progressPct }}"
+                 data-goals='{{ goals|json_encode|e('html_attr') }}'
+                 data-locale="{{ app.request.locale }}"
+                 data-currency="{{ context.currency.isoCode ?? 'EUR' }}"
+            >
+                <div class="motivation-bar__track-wrapper">
+
+                    {# Progress bar #}
+                    <div class="motivation-bar__track">
+                        <div class="motivation-bar__fill">
                         </div>
-
-                        {# Tooltip that rides on the progress #}
-                        <div class="mpb__tooltip" aria-hidden="true">
-                            <span class="mpb__tooltipText">
-                                {% if nextGoal %}
-                                    {{ nextGoal.label }}
-                                {% else %}
-                                    All rewards
-                                {% endif %}
-                            </span>
-                            <span class="mpb__tooltipArrow"></span>
-                        </div>
-
-                        {# Goal circles #}
-                        {% for g in goals %}
-                            {% set gPct = maxGoal > 0 ? ((g.amount / maxGoal) * 100) : 0 %}
-                            {% set reached = currentTotal >= g.amount %}
-
-                            <button type="button"
-                                    class="mpb__milestone {{ reached ? 'is-reached' : '' }}"
-                                    style="left: {{ gPct }}%;"
-                                    data-mpb-milestone="true"
-                                    data-amount="{{ g.amount }}"
-                                    data-label="{{ g.label }}"
-                                    aria-label="{{ g.label }} at {{ g.amount|currency }}">
-                                <span class="mpb__milestoneDot"></span>
-                            </button>
-                        {% endfor %}
                     </div>
 
-                        <div class="mpb__message">
-                            {{ headlineText }}
-                        </div>
+                    {# Goal circles #}
+                    {% for goal in goals %}
+                        {% set goalPercentage = maxGoal> 0 ? ((goal.amount / maxGoal) * 100) : 0  %}
+
+                        <button
+                            type="button"
+                            class="motivation-bar__goal"
+                            style="left: {{ goalPercentage }}%;"
+                            data-mb-goal
+                            data-goal-amount="{{ goal.amount }}"
+                            data-goal-label="{{ goal.label }}"
+                        >
+                            <span class="motivation-bar__goalDot" title="{{ goal.label }} ({{ goal.amount|currency }})"></span>
+                        </button>
+                    {% endfor %}
+
+                    {# Tooltip #}
+                    <div class="motivation-bar__tooltip" data-mb-tooltip hidden>
+                        <span class="motivation-bar__tooltipText" data-mb-tooltip-text></span>
+                    </div>
+                </div>
+
+                {# Motivation message #}
+                <div class="motivation-bar__message">
+                    <span data-mb-message > Cart total: {{ currentTotal|currency }} </span>
                 </div>
             </div>
-
-            <div class="motivation-bar">
-                <div>
-                    <div class="progress-bar"></div>
-                </div>
-
-                <div>
-                    Message will be here
-                </div>
-
-            </div>
-
 
             {% block component_offcanvas_cart_flashbags %}
             {% endblock %}
