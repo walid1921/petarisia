@@ -3,31 +3,34 @@
 {% block layout_header_top_bar %}
     <div class="top-bar d-none d-lg-flex align-items-center justify-content-between">
         {% block layout_header_top_bar_inner %}
+            {% set firstText = theme_config('pt-info-top-bar-text-1') %}
+            {% set secondText = theme_config('pt-info-top-bar-text-2') %}
+            {% set thirdText = theme_config('pt-info-top-bar-text-3') %}
 
-            <div class="text-white">
+            <div>
                 {% sw_icon 'package' style {
                     namespace: 'PetarisiaTheme'
                 } %}
                 <span class="fs-6 ms-2">
-                    Shipping and free returns | 72h Delivery
+                    {{ firstText|trans|sw_sanitize }}
                 </span>
             </div>
 
-            <div class="text-white">
+            <div>
                 {% sw_icon 'package' style {
                     namespace: 'PetarisiaTheme'
                 } %}
                 <span class="fs-6 ms-2">
-                    Shipping and free returns | 72h Delivery
+                     {{ secondText|trans|sw_sanitize }}
                 </span>
             </div>
 
-            <div class="text-white">
+            <div>
                 {% sw_icon 'package' style {
                     namespace: 'PetarisiaTheme'
                 } %}
                 <span class="fs-6 ms-2">
-                    Shipping and free returns | 72h Delivery
+                      {{ thirdText|trans|sw_sanitize }}
                 </span>
             </div>
 
