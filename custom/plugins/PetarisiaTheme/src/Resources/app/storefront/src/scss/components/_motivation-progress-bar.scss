@@ -1,0 +1,226 @@
+.mpb {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+//! Motivation message
+.mpb__message {
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+  width: 100%;
+  text-align: end;
+}
+
+.mpb__trackWrap {
+  position: relative;
+  padding-top: 30px; // space for tooltip
+
+  //! Progress bar
+  .mpb__track {
+    height: 6px;
+    border-radius: 999px;
+    background: #E4E4E7;
+    overflow: hidden;
+
+    .mpb__fill {
+      height: 100%;
+      border-radius: 999px;
+      background: $sw-color-brand-primary;
+      width: 0;
+      transition: width 280ms ease;
+    }
+  }
+}
+
+
+//! Tooltip
+.mpb__tooltip {
+  position: absolute;
+  top: -20px;
+  transform: translateX(-50%);
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease, left 280ms ease;
+}
+
+.mpb__tooltipText {
+  display: inline-block;
+  background: $sw-color-brand-primary;
+  color: #fff;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.mpb__tooltipArrow {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid $sw-color-brand-primary;
+}
+
+//! Goal circles
+.mpb__milestone {
+  position: absolute;
+  top: 28px; // aligns with bar
+  transform: translateX(-50%);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+
+  .mpb__milestoneDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #fff;
+    border: 3px solid #000;
+    display: block;
+  }
+}
+
+.mpb__milestone.is-reached .mpb__milestoneDot {
+  background: #000;
+}
+
+
+
+//! new
+.motivation-bar {
+  display: flex;
+  flex-direction: column;
+}
+
+.motivation-bar__message {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 600;
+  width: 100%;
+  text-align: end;
+}
+
+.motivation-bar__track-wrapper {
+  position: relative;
+  padding-top: 30px; // space for tooltip
+}
+
+.motivation-bar__track {
+  height: 6px;
+  border-radius: 999px;
+  background: #E4E4E7;
+  overflow: hidden;
+
+  .motivation-bar__fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: #000;
+    width: 0%; // to make the animation work
+    transition: width 280ms ease-in-out;
+  }
+}
+
+.motivation-bar__goal {
+  position: absolute;
+  top: 28px; // aligns with bar
+  transform: translateX(-50%);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+
+  .motivation-bar__goalDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #fff;
+    border: 3px solid #000;
+    display: block;
+  }
+}
+
+.motivation-bar__goal.is-reached .motivation-bar__goalDot {
+  background:#000;
+  border-color:#000;
+  position: relative;
+}
+
+.motivation-bar__goal.is-reached:hover .motivation-bar__goalDot::after,
+.motivation-bar__goal.is-reached:focus-visible .motivation-bar__goalDot::after {
+  content: "";
+  position: absolute;
+  inset: -4px; // ring starts slightly outside dot
+  border-radius: 999px;
+  border: 2px solid #000;  // ring color
+  transform: scale(1);
+  opacity: 0.6;
+  animation: mb-wave 700ms ease-out infinite;
+}
+
+/* One wave animation */
+@keyframes mb-wave {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .motivation-bar__goal.is-reached:hover .motivation-bar__goalDot::after,
+  .motivation-bar__goal.is-reached:focus-visible .motivation-bar__goalDot::after {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+
+
+//! Tooltip
+.motivation-bar__tooltip {
+  position: absolute;
+  top: -5px;
+  left:0;
+  transform:translateX(-50%);
+  pointer-events: none;
+  z-index:10;
+  opacity: 0;
+  transition: opacity 140ms ease-in-out, transform 140ms ease-in-out;
+}
+
+.motivation-bar__tooltip.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-8px) scale(1);
+}
+
+.motivation-bar__tooltipText {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  padding:6px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.motivation-bar__tooltipArrow {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid #000;
+}

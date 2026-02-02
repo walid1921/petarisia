@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[26429],{429:(e,t,n)=>{n.r(t),n.d(t,{default:()=>i});var s=n(373);class i extends s.A{init(){window.addEventListener("scroll",this.onScroll.bind(this))}onScroll(){window.innerHeight+window.pageYOffset>=document.body.offsetHeight&&alert("Seems like there's nothing more to see here.")}}}}]);
