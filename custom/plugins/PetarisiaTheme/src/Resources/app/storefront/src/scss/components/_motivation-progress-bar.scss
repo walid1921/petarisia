@@ -47,8 +47,8 @@
     width: 10px;
     height: 10px;
     border-radius: 999px;
-    background: #000;
-    opacity: 0.4;
+    background: #fff;
+    border: 2px solid rgba(0, 0, 0, 0.5);
     display: block;
 
     transform: scale(1);
@@ -66,7 +66,7 @@
 }
 
 .motivation-bar__goalDot.is-pop {
-  animation: mb-pop 220ms ease;
+  animation: mb-pop 500ms ease;
 }
 
 @keyframes mb-pop {
