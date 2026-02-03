@@ -10,8 +10,12 @@
     "extra": {
         "shopware-plugin-class": "Petarisia\\MotivationBarPetarisia",
         "label": {
-            "de-DE": "Skeleton plugin",
-            "en-GB": "Skeleton plugin"
+            "en-GB": "Motivation Bar",
+            "de-DE": "Motivationsleiste"
+        },
+        "description": {
+            "en-GB": "Motivation progress bar in the cart/offcanvas.",
+            "de-DE": "Motivations-Fortschrittsbalken im Warenkorb/Offcanvas."
         }
     },
     "autoload": {
