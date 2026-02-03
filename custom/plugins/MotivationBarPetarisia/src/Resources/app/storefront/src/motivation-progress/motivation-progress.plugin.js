@@ -11,8 +11,17 @@ export default class MotivationProgressPlugin extends Plugin {
         this.tooltipEl = this.el.querySelector('[data-mb-tooltip]');
         this.tooltipTextEl = this.el.querySelector('[data-mb-tooltip-text]');
 
-
         this.messageEl =this.el.querySelector('[data-mb-message]');
+
+
+        this.modalOverlayEl =this.el.querySelector('[data-mb-modal-overlay]');
+        this.modalEl =this.el.querySelector('[data-mb-modal]');
+        this.modalCloseEl =this.el.querySelector('[data-mb-modal-close]');
+        this.modalTitleEl =this.el.querySelector('[data-mb-modal-title]');
+        this.modalBodyEl =this.el.querySelector('[data-mb-modal-body]');
+        this.modalIconEl =this.el.querySelector('[data-mb-modal-icon]');
+
+        this.modalStatusEl =this.el.querySelector('[data-mb-modal-status]');
 
         try {
             this.goals =JSON.parse(this.el.dataset.goals ||'[]');
@@ -34,6 +43,7 @@ export default class MotivationProgressPlugin extends Plugin {
         this._updateMessage();
         this._updateMilestones();
         this._bindTooltipEvents();
+        this._bindModalEvents();
     }
 
     _applyProgress() {
@@ -105,11 +115,34 @@ export default class MotivationProgressPlugin extends Plugin {
 
     _updateMilestones() {
         const goalEls = this.el.querySelectorAll('[data-mb-goal]');
-        goalEls.forEach((btn) => {
-            const amount = parseFloat(btn.dataset.goalAmount ||'0');
-            const reached = this.currentTotal >= amount;
 
-            btn.classList.toggle('is-reached', reached);
+        goalEls.forEach((btn) => {
+            const amount = parseFloat(btn.dataset.goalAmount || '0');
+            const reachedNow = this.currentTotal >= amount;
+
+            const wasReached = btn.classList.contains('is-reached');
+
+            btn.classList.toggle('is-reached', reachedNow);
+
+            // Accessibility + behavior
+            btn.setAttribute('aria-disabled', reachedNow ? 'false' : 'true');
+            btn.tabIndex = reachedNow ? 0 : -1;
+
+            // Trigger pop ONLY when it just became reached
+            if (!wasReached && reachedNow) {
+                const dot = btn.querySelector('.motivation-bar__goalDot');
+                if (dot) {
+                    dot.classList.remove('is-pop'); // reset if needed
+                    // force reflow so re-adding class restarts animation
+                    void dot.offsetWidth;
+                    dot.classList.add('is-pop');
+
+                    dot.addEventListener('animationend', () => {
+                        dot.classList.remove('is-pop');
+                    }, { once: true });
+
+                }
+            }
         });
     }
 
@@ -118,17 +151,13 @@ export default class MotivationProgressPlugin extends Plugin {
 
         if (!this.tooltipEl || !this.tooltipTextEl || !goalEls.length) return;
 
-        // Last
-
         goalEls.forEach((btn) => {
             console.log(btn);
 
             btn.addEventListener('mouseenter', () => {
                 this.tooltipTextEl.textContent = btn.dataset.goalLabel || '';
 
-                if (btn.classList.contains("is-reached")) {
-                    this.tooltipEl.hidden = false;
-                }
+                this.tooltipEl.hidden = false;
 
                 const wrapper = this.el.querySelector('.motivation-bar__track-wrapper');
                 const wrapperRect = wrapper.getBoundingClientRect();
@@ -174,6 +203,85 @@ export default class MotivationProgressPlugin extends Plugin {
 
         });
     }
+
+    _bindModalEvents() {
+        const goalEls =this.el.querySelectorAll('[data-mb-goal]');
+        if (!this.modalOverlayEl || !this.modalEl || !goalEls.length)return;
+
+        // Open on goal click
+        goalEls.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Only open if reached
+                if (btn.getAttribute('aria-disabled') === 'true') return;
+
+                this._openModalFromGoal(btn);
+            });
+        });
+
+        // Close via X button
+        if (this.modalCloseEl) {
+            this.modalCloseEl.addEventListener('click',(e) => {
+                e.preventDefault();
+                this._closeModal();
+            });
+        }
+
+        // Close by clicking outside modal (on overlay)
+        this.modalOverlayEl.addEventListener('click',(e) => {
+            if (e.target ===this.modalOverlayEl) {
+                this._closeModal();
+            }
+        });
+
+        // Close on Esc
+        document.addEventListener('keydown',(e) => {
+            if (e.key ==='Escape' && !this.modalOverlayEl.hidden) {
+                this._closeModal();
+            }
+        });
+    }
+
+    _openModalFromGoal(btn) {
+        const label = btn.dataset.goalLabel || '';
+        const description = btn.dataset.goalDescription || '';
+        const iconName = btn.dataset.goalIcon || '';
+        const amount = parseFloat(btn.dataset.goalAmount || '0');
+
+        const reached = this.currentTotal >= amount;
+        const remaining = Math.max(0, amount - this.currentTotal);
+
+        if (this.modalTitleEl) this.modalTitleEl.textContent = label;
+        if (this.modalBodyEl) this.modalBodyEl.textContent = description;
+
+        if (this.modalStatusEl) {
+            if (reached) {
+                this.modalStatusEl.textContent = `Unlocked 🎉`;
+            } else {
+                // You won't reach this branch because click is blocked,
+                // but it keeps logic correct if you change rules later.
+                this.modalStatusEl.textContent = `Spend ${this._formatMoney(remaining)} more to unlock`;
+            }
+        }
+
+        // Icon (Twig icon bank clone)
+        if (this.modalIconEl) {
+            this.modalIconEl.innerHTML = '';
+            const template = this.el.querySelector(`[data-mb-icon-template="${CSS.escape(iconName)}"]`);
+            if (template) this.modalIconEl.innerHTML = template.innerHTML;
+        }
+
+        this.modalOverlayEl.hidden = false;
+        this.modalEl.setAttribute('aria-hidden', 'false');
+    }
+
+    _closeModal() {
+        this.modalEl.setAttribute('aria-hidden','true');
+        this.modalOverlayEl.hidden =true;
+    }
+
 
 
 }

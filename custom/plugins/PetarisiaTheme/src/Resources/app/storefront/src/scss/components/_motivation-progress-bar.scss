@@ -1,97 +1,3 @@
-.mpb {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-//! Motivation message
-.mpb__message {
-  font-size: 12px;
-  line-height: 1.2;
-  font-weight: 600;
-  width: 100%;
-  text-align: end;
-}
-
-.mpb__trackWrap {
-  position: relative;
-  padding-top: 30px; // space for tooltip
-
-  //! Progress bar
-  .mpb__track {
-    height: 6px;
-    border-radius: 999px;
-    background: #E4E4E7;
-    overflow: hidden;
-
-    .mpb__fill {
-      height: 100%;
-      border-radius: 999px;
-      background: $sw-color-brand-primary;
-      width: 0;
-      transition: width 280ms ease;
-    }
-  }
-}
-
-
-//! Tooltip
-.mpb__tooltip {
-  position: absolute;
-  top: -20px;
-  transform: translateX(-50%);
-  left: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 160ms ease, left 280ms ease;
-}
-
-.mpb__tooltipText {
-  display: inline-block;
-  background: $sw-color-brand-primary;
-  color: #fff;
-  font-size: 13px;
-  padding: 8px 12px;
-  border-radius: 5px;
-  white-space: nowrap;
-}
-
-.mpb__tooltipArrow {
-  display: block;
-  width: 0;
-  height: 0;
-  margin: 0 auto;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 8px solid $sw-color-brand-primary;
-}
-
-//! Goal circles
-.mpb__milestone {
-  position: absolute;
-  top: 28px; // aligns with bar
-  transform: translateX(-50%);
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-
-  .mpb__milestoneDot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: #fff;
-    border: 3px solid #000;
-    display: block;
-  }
-}
-
-.mpb__milestone.is-reached .mpb__milestoneDot {
-  background: #000;
-}
-
-
-
 //! new
 .motivation-bar {
   display: flex;
@@ -141,19 +47,36 @@
     width: 10px;
     height: 10px;
     border-radius: 999px;
-    background: #fff;
-    border: 3px solid #000;
+    background: #000;
+    opacity: 0.4;
     display: block;
+
+    transform: scale(1);
+    transition: transform 140ms ease;
   }
 }
 
 .motivation-bar__goal.is-reached .motivation-bar__goalDot {
   background:#000;
-  border-color:#000;
   position: relative;
 }
 
-.motivation-bar__goal.is-reached:hover .motivation-bar__goalDot::after,
+.motivation-bar__goal[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.motivation-bar__goalDot.is-pop {
+  animation: mb-pop 220ms ease;
+}
+
+@keyframes mb-pop {
+  0%   { transform: scale(1); }
+  55%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+
+.motivation-bar__goal.is-reached .motivation-bar__goalDot::after,
 .motivation-bar__goal.is-reached:focus-visible .motivation-bar__goalDot::after {
   content: "";
   position: absolute;
@@ -162,7 +85,7 @@
   border: 2px solid #000;  // ring color
   transform: scale(1);
   opacity: 0.6;
-  animation: mb-wave 700ms ease-out infinite;
+  animation: mb-wave 1s ease-out infinite;
 }
 
 /* One wave animation */
@@ -223,4 +146,86 @@
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
   border-top: 8px solid #000;
+}
+
+
+//! Open Modal
+.motivation-bar__modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1050; // above offcanvas content
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.motivation-bar__modal {
+  width: min(400px, 100%);
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  padding: 22px 18px;
+  position: relative;
+  margin-top: 10rem;
+}
+
+.motivation-bar__modalClose {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.motivation-bar__modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.motivation-bar__modalIcon {
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 100%;
+      height: 100%;
+      top: 0 !important;
+    }
+  }
+}
+
+.motivation-bar__modalTitle {
+  font-weight: 700;
+  font-size: 16px;
+  width: 100%;
+}
+
+.motivation-bar__modalBody{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.motivation-bar__modalBodyText {
+  font-size: 14px;
+  line-height: 1.35;
+  color: #111;
+}
+
+.motivation-bar__modalStatus {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
 }
