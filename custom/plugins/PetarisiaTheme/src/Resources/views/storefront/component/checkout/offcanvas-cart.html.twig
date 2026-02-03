@@ -67,11 +67,31 @@
             {# To see the total price {{ dump(currentTotal) }} #}
 
             {# Hardcoded goals for now (later: Admin config) #}
+
             {% set goals = [
-                { amount: 50, label: 'Free shipping' },
-                { amount: 70, label: 'Free gift' },
-                { amount: 100, label: '10% discount' },
+                {
+                    key: 'freeShipping',
+                    amount: 50,
+                    label: 'Free shipping',
+                    description: 'Your order is free shipping costs now.',
+                    icon: 'truck'
+                },
+                {
+                    key: 'gift',
+                    amount: 75,
+                    label: 'Free gift',
+                    description: 'Congratulations, You have unlocked a free gift in your package.',
+                    icon: 'package-gift'
+                },
+                {
+                    key: 'discount',
+                    amount: 100,
+                    label: '10% discount',
+                    description: 'Congratulations, 10% off your entire order.',
+                    icon: 'trash'
+                }
             ] %}
+
 
             {# The “max” goal defines 100% #}
             {% set maxGoal = goals|last.amount %}
@@ -108,6 +128,8 @@
                             data-mb-goal
                             data-goal-amount="{{ goal.amount }}"
                             data-goal-label="{{ goal.label }}"
+                            data-goal-description="{{ goal.description }}"
+                            data-goal-icon="{{ goal.icon }}"
                         >
                             <span class="motivation-bar__goalDot" title="{{ goal.label }} ({{ goal.amount|currency }})"></span>
                         </button>
@@ -123,6 +145,36 @@
                 <div class="motivation-bar__message">
                     <span data-mb-message > Cart total: {{ currentTotal|currency }} </span>
                 </div>
+
+                {# Modal window #}
+                <div class="motivation-bar__modalOverlay" data-mb-modal-overlay hidden>
+                    <div class="motivation-bar__modal" data-mb-modal role="dialog" aria-modal="true" aria-hidden="true">
+                        <button type="button" class="motivation-bar__modalClose" data-mb-modal-close aria-label="Close">×</button>
+
+                        <div class="motivation-bar__modalHeader">
+                            <div class="motivation-bar__modalIcon" data-mb-modal-icon>
+                                {# icon will be injected by JS (as text or class); see JS step #}
+                            </div>
+                            <div class="motivation-bar__modalTitle" data-mb-modal-title></div>
+                        </div>
+
+                        <div class="motivation-bar__modalBody">
+                            <div class="motivation-bar__modalStatus" data-mb-modal-status></div>
+                            <div class="motivation-bar__modalBodyText" data-mb-modal-body></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {# Hidden icon bank (Twig renders trusted SVGs; JS only clones) #}
+                <div class="motivation-bar__iconBank" hidden>
+                    {% for goal in goals %}
+                        <div data-mb-icon-template="{{ goal.icon }}">
+                            {% sw_icon goal.icon style { size: 'sm' } %}
+                        </div>
+                    {% endfor %}
+                </div>
+
             </div>
 
             {% block component_offcanvas_cart_flashbags %}
