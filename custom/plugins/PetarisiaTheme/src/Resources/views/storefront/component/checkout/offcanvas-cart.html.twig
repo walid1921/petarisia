@@ -61,121 +61,125 @@
             {% endblock %}
 
 
+            {% if (isCartNotEmpty) %}
+                {# Motivation Progress bar #}
+                {% set currentTotal = page.cart.price.totalPrice ?? 0  %}
+                {# To see the total price {{ dump(currentTotal) }} #}
 
-            {# Motivation Progress bar #}
-            {% set currentTotal = page.cart.price.totalPrice ?? 0  %}
-            {# To see the total price {{ dump(currentTotal) }} #}
+                {# Hardcoded goals for now (later: Admin config) #}
 
-            {# Hardcoded goals for now (later: Admin config) #}
+                {% set goals = [
+                    {
+                        key: 'freeShipping',
+                        amount: 50,
+                        label: 'Free shipping',
+                        labelColor: '',
+                        description: 'Your order is free shipping costs now.',
+                        icon: 'truck'
+                    },
+                    {
+                        key: 'gift',
+                        amount: 75,
+                        label: 'Free gift',
+                        labelColor: '',
+                        description: 'Congratulations, You have unlocked a free gift in your package.',
+                        icon: 'package-gift'
+                    },
+                    {
+                        key: 'discount',
+                        amount: 100,
+                        label: '10% discount',
+                        labelColor: '',
+                        description: 'Congratulations, 10% off your entire order.',
+                        icon: 'trash'
+                    }
+                ] %}
 
-            {% set goals = [
-                {
-                    key: 'freeShipping',
-                    amount: 50,
-                    label: 'Free shipping',
-                    description: 'Your order is free shipping costs now.',
-                    icon: 'truck'
-                },
-                {
-                    key: 'gift',
-                    amount: 75,
-                    label: 'Free gift',
-                    description: 'Congratulations, You have unlocked a free gift in your package.',
-                    icon: 'package-gift'
-                },
-                {
-                    key: 'discount',
-                    amount: 100,
-                    label: '10% discount',
-                    description: 'Congratulations, 10% off your entire order.',
-                    icon: 'trash'
-                }
-            ] %}
 
+                {# The “max” goal defines 100% #}
+                {% set maxGoal = goals|last.amount %}
+                {% set progressPct = maxGoal > 0 ? ((currentTotal / maxGoal) * 100) : 0 %}
+                {% set progressPct = progressPct > 100 ? 100 : progressPct %}
 
-            {# The “max” goal defines 100% #}
-            {% set maxGoal = goals|last.amount %}
-            {% set progressPct = maxGoal > 0 ? ((currentTotal / maxGoal) * 100) : 0 %}
-            {% set progressPct = progressPct > 100 ? 100 : progressPct %}
+                {% set headlineText = "You only need €11.00 for 10% discount!" %}
 
-            {% set headlineText = "You only need €11.00 for 10% discount!" %}
+                <div class="motivation-bar"
+                     data-motivation-bar
+                     data-current-total="{{ currentTotal }}"
+                     data-max-goal="{{ maxGoal }}"
+                     data-progress="{{ progressPct }}"
+                     data-goals='{{ goals|json_encode|e('html_attr') }}'
+                     data-locale="{{ app.request.locale }}"
+                     data-currency="{{ context.currency.isoCode ?? 'EUR' }}"
+                >
+                    <div class="motivation-bar__track-wrapper">
 
-            <div class="motivation-bar"
-                 data-motivation-bar
-                 data-current-total="{{ currentTotal }}"
-                 data-max-goal="{{ maxGoal }}"
-                 data-progress="{{ progressPct }}"
-                 data-goals='{{ goals|json_encode|e('html_attr') }}'
-                 data-locale="{{ app.request.locale }}"
-                 data-currency="{{ context.currency.isoCode ?? 'EUR' }}"
-            >
-                <div class="motivation-bar__track-wrapper">
-
-                    {# Progress bar #}
-                    <div class="motivation-bar__track">
-                        <div class="motivation-bar__fill">
-                        </div>
-                    </div>
-
-                    {# Goal circles #}
-                    {% for goal in goals %}
-                        {% set goalPercentage = maxGoal> 0 ? ((goal.amount / maxGoal) * 100) : 0  %}
-
-                        <button
-                            type="button"
-                            class="motivation-bar__goal"
-                            style="left: {{ goalPercentage }}%;"
-                            data-mb-goal
-                            data-goal-amount="{{ goal.amount }}"
-                            data-goal-label="{{ goal.label }}"
-                            data-goal-description="{{ goal.description }}"
-                            data-goal-icon="{{ goal.icon }}"
-                        >
-                            <span class="motivation-bar__goalDot" title="{{ goal.label }} ({{ goal.amount|currency }})"></span>
-                        </button>
-                    {% endfor %}
-
-                    {# Tooltip #}
-                    <div class="motivation-bar__tooltip" data-mb-tooltip hidden>
-                        <span class="motivation-bar__tooltipText" data-mb-tooltip-text></span>
-                    </div>
-                </div>
-
-                {# Motivation message #}
-                <div class="motivation-bar__message">
-                    <span data-mb-message > Cart total: {{ currentTotal|currency }} </span>
-                </div>
-
-                {# Modal window #}
-                <div class="motivation-bar__modalOverlay" data-mb-modal-overlay hidden>
-                    <div class="motivation-bar__modal" data-mb-modal role="dialog" aria-modal="true" aria-hidden="true">
-                        <button type="button" class="motivation-bar__modalClose" data-mb-modal-close aria-label="Close">×</button>
-
-                        <div class="motivation-bar__modalHeader">
-                            <div class="motivation-bar__modalIcon" data-mb-modal-icon>
-                                {# icon will be injected by JS (as text or class); see JS step #}
+                        {# Progress bar #}
+                        <div class="motivation-bar__track">
+                            <div class="motivation-bar__fill">
                             </div>
-                            <div class="motivation-bar__modalTitle" data-mb-modal-title></div>
                         </div>
 
-                        <div class="motivation-bar__modalBody">
-                            <div class="motivation-bar__modalStatus" data-mb-modal-status></div>
-                            <div class="motivation-bar__modalBodyText" data-mb-modal-body></div>
-                        </div>
+                        {# Goal circles #}
+                        {% for goal in goals %}
+                            {% set goalPercentage = maxGoal> 0 ? ((goal.amount / maxGoal) * 100) : 0  %}
 
+                            <button
+                                type="button"
+                                class="motivation-bar__goal"
+                                style="left: {{ goalPercentage }}%;"
+                                data-mb-goal
+                                data-goal-amount="{{ goal.amount }}"
+                                data-goal-label="{{ goal.label }}"
+                                data-goal-description="{{ goal.description }}"
+                                data-goal-icon="{{ goal.icon }}"
+                            >
+                                <span class="motivation-bar__goalDot"></span>
+                            </button>
+                        {% endfor %}
+
+                        {# Tooltip #}
+                        <div class="motivation-bar__tooltip" data-mb-tooltip hidden>
+                            <span class="motivation-bar__tooltipText" data-mb-tooltip-text></span>
+                        </div>
                     </div>
-                </div>
 
-                {# Hidden icon bank (Twig renders trusted SVGs; JS only clones) #}
-                <div class="motivation-bar__iconBank" hidden>
-                    {% for goal in goals %}
-                        <div data-mb-icon-template="{{ goal.icon }}">
-                            {% sw_icon goal.icon style { size: 'sm' } %}
+                    {# Motivation message #}
+                    <div class="motivation-bar__message">
+                        <span data-mb-message > Cart total: {{ currentTotal|currency }} </span>
+                    </div>
+
+                    {# Modal window #}
+                    <div class="motivation-bar__modalOverlay" data-mb-modal-overlay hidden>
+                        <div class="motivation-bar__modal" data-mb-modal role="dialog" aria-modal="true" aria-hidden="true">
+                            <button type="button" class="motivation-bar__modalClose" data-mb-modal-close aria-label="Close">×</button>
+
+                            <div class="motivation-bar__modalHeader">
+                                <div class="motivation-bar__modalIcon" data-mb-modal-icon>
+                                    {# icon will be injected by JS (as text or class); see JS step #}
+                                </div>
+                                <div class="motivation-bar__modalTitle" data-mb-modal-title></div>
+                            </div>
+
+                            <div class="motivation-bar__modalBody">
+                                <div class="motivation-bar__modalStatus" data-mb-modal-status></div>
+                                <div class="motivation-bar__modalBodyText" data-mb-modal-body></div>
+                            </div>
+
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
 
-            </div>
+                    {# Hidden icon bank (Twig renders trusted SVGs; JS only clones) #}
+                    <div class="motivation-bar__iconBank" hidden>
+                        {% for goal in goals %}
+                            <div data-mb-icon-template="{{ goal.icon }}">
+                                {% sw_icon goal.icon style { size: 'sm' } %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            {% endif %}
 
             {% block component_offcanvas_cart_flashbags %}
             {% endblock %}
