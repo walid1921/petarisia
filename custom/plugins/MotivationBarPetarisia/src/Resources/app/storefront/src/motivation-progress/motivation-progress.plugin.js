@@ -23,6 +23,8 @@ export default class MotivationProgressPlugin extends Plugin {
 
         this.modalStatusEl =this.el.querySelector('[data-mb-modal-status]');
 
+        this._messageAnimating = false;
+
         try {
             this.goals =JSON.parse(this.el.dataset.goals ||'[]');
         } catch (e) {
@@ -40,8 +42,9 @@ export default class MotivationProgressPlugin extends Plugin {
         // });
 
         this._applyProgress();
-        this._updateMessage();
-        this._updateMilestones();
+        const goalJustReached = this._updateMilestones();
+        this._updateMessage(goalJustReached);
+
         this._bindTooltipEvents();
         this._bindModalEvents();
     }
@@ -82,7 +85,7 @@ export default class MotivationProgressPlugin extends Plugin {
         }).format(value);
     }
 
-    _updateMessage() {
+    _updateMessage(animate = false) {
         if (!this.messageEl)return;
 
         // Make sure goals are sorted ascending by amount
@@ -90,6 +93,14 @@ export default class MotivationProgressPlugin extends Plugin {
 
         // Find the first goal that is not reached yet
         const nextGoal = goalsSorted.find(g => this.currentTotal < g.amount);
+
+        const setMessage = (html) => {
+            if (animate) {
+                this._setMessageAnimated(html);
+            } else {
+                this.messageEl.innerHTML = html;
+            }
+        };
 
         if (!nextGoal) {
             const labels = goalsSorted.map((g) => g.label);
@@ -104,22 +115,78 @@ export default class MotivationProgressPlugin extends Plugin {
                 rewardText = `${labels.slice(0, -1).join(', ')} and ${labels.at(-1)}`;
             }
 
-            this.messageEl.textContent = `Nice! You have ${rewardText} 🎉`;
+            setMessage(`Nice! You have <span class="motivation-bar__highlight">${this._escapeHtml(rewardText)}</span> 🎉`);
             return;
         }
 
         const remaining = nextGoal.amount - this.currentTotal;
 
-        this.messageEl.textContent =`You only need ${this._formatMoney(remaining)} for ${nextGoal.label}!`;
+        setMessage(
+            `You only need <span class="motivation-bar__highlight">${this._formatMoney(remaining)}</span> for <span class="motivation-bar__highlight">${this._escapeHtml(nextGoal.label)}</span>!`
+        );
+
+
+    }
+
+    _escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+
+    _setMessageAnimated(newHtml) {
+        if (!this.messageEl) return;
+
+        // Normalize: avoid animations when message is the same
+        const current = this.messageEl.innerHTML.trim();
+        const next = String(newHtml).trim();
+        if (current === next) return;
+
+        // If an animation is already in progress, just jump to the latest
+        if (this._messageAnimating) {
+            this.messageEl.innerHTML = next;
+            return;
+        }
+
+        this._messageAnimating = true;
+
+        // 1) Animate old message OUT
+        this.messageEl.classList.add('is-leaving');
+
+        const onLeaveEnd = (e) => {
+            if (e.propertyName !== 'opacity') return;
+
+            this.messageEl.removeEventListener('transitionend', onLeaveEnd);
+
+            // 2) Swap content while hidden
+            this.messageEl.innerHTML = next;
+
+            // 3) Prepare new message IN (start hidden/down)
+            this.messageEl.classList.remove('is-leaving');
+            this.messageEl.classList.add('is-entering');
+
+            // Force browser to apply "entering" state before removing it
+            void this.messageEl.offsetWidth;
+
+            // 4) Remove entering => animates to normal
+            this.messageEl.classList.remove('is-entering');
+
+            // 5) Finish after the transition time
+            window.setTimeout(() => {
+                this._messageAnimating = false;
+            }, 190);
+        };
+
+        this.messageEl.addEventListener('transitionend', onLeaveEnd);
     }
 
     _updateMilestones() {
         const goalEls = this.el.querySelectorAll('[data-mb-goal]');
+        let goalJustReached = false;
 
         goalEls.forEach((btn) => {
             const amount = parseFloat(btn.dataset.goalAmount || '0');
             const reachedNow = this.currentTotal >= amount;
-
             const wasReached = btn.classList.contains('is-reached');
 
             btn.classList.toggle('is-reached', reachedNow);
@@ -128,8 +195,11 @@ export default class MotivationProgressPlugin extends Plugin {
             btn.setAttribute('aria-disabled', reachedNow ? 'false' : 'true');
             btn.tabIndex = reachedNow ? 0 : -1;
 
+
+            // Detect the moment is flips to reached
             // Trigger pop ONLY when it just became reached
             if (!wasReached && reachedNow) {
+                goalJustReached = true;
                 const dot = btn.querySelector('.motivation-bar__goalDot');
                 if (dot) {
                     dot.classList.remove('is-pop'); // reset if needed
@@ -144,6 +214,8 @@ export default class MotivationProgressPlugin extends Plugin {
                 }
             }
         });
+
+        return goalJustReached;
     }
 
     _bindTooltipEvents() {
@@ -152,7 +224,6 @@ export default class MotivationProgressPlugin extends Plugin {
         if (!this.tooltipEl || !this.tooltipTextEl || !goalEls.length) return;
 
         goalEls.forEach((btn) => {
-            console.log(btn);
 
             btn.addEventListener('mouseenter', () => {
                 this.tooltipTextEl.textContent = btn.dataset.goalLabel || '';
@@ -281,6 +352,9 @@ export default class MotivationProgressPlugin extends Plugin {
         this.modalEl.setAttribute('aria-hidden','true');
         this.modalOverlayEl.hidden =true;
     }
+
+
+
 
 
 

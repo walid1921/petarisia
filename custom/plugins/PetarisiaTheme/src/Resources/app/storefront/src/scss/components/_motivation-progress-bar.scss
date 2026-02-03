@@ -8,10 +8,32 @@
   margin-top: 12px;
   font-size: 12px;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 400;
   width: 100%;
   text-align: end;
 }
+
+.motivation-bar__highlight {
+  font-weight: 600;
+  transition: color 120ms ease;
+}
+
+.motivation-bar__message [data-mb-message] {
+  display: inline-block; // allows transform to feel natural
+  transition: opacity 180ms ease, transform 180ms ease;
+  will-change: opacity, transform;
+}
+
+.motivation-bar__message [data-mb-message].is-leaving {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.motivation-bar__message [data-mb-message].is-entering {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
 
 .motivation-bar__track-wrapper {
   position: relative;
