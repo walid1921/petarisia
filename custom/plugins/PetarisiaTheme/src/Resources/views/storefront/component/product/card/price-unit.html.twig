@@ -1,4 +1,20 @@
 {% sw_extends '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
 
+
+ {% block component_product_box_price_unit %}
+ {% endblock %}
+
 {% block component_product_box_price_tax_info %}
+{% endblock %}
+
+ {% block component_product_box_cheapest_price %}
+ {% endblock %}
+
+
+{% block component_product_box_regulation_price %}
+ {% if isRegulationPrice %}
+  <span class="product-price with-regulation-price">
+      {% if isListPrice %}<br aria-hidden="true">{% endif %}<span class="regulation-price">{{ price.regulationPrice.price|currency }}</span>
+  </span>
+ {% endif %}
 {% endblock %}

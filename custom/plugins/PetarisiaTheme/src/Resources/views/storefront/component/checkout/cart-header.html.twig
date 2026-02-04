@@ -1,54 +1,30 @@
 {% sw_extends '@Storefront/storefront/component/checkout/cart-header.html.twig' %}
 
-{% block component_checkout_cart_header %}
-    {% if showRemoveColumn is not defined %}
-        {% set showRemoveColumn = true %}
-    {% endif %}
-
-    {% if showSubtotal is not defined %}
-        {% set showSubtotal = true %}
-    {% endif %}
-
-    {% set subtotalColumnSize = 2 %}
-    {% set infoColumnSize = 8 %}
-    {% if showSubtotal %}
-        {% set infoColumnSize = infoColumnSize - subtotalColumnSize %}
-    {% endif %}
-    {% if showRemoveColumn %}
-        {% set infoColumnSize = infoColumnSize - 1 %}
-    {% endif %}
-
-    {# @deprecated tag:v6.8.0 - Will be removed, use infoColumnSize with a prefix instead. #}
-    {% set infoColumnClass = 'col-' ~ infoColumnSize %}
-
-    {% block component_checkout_cart_header_element %}
-        <li class="card-title cart-table-header cart-table-header--sticky" aria-hidden="true">
-
-            <div class="row cart-header-row">
+{# Sticky header class #}
+{% block component_checkout_cart_header_element %}
+    <li class="card-title cart-table-header cart-table-header--sticky" aria-hidden="true">
+        <div class="row cart-header-row">
+            {% block component_checkout_cart_header_product_info %}
                 {% set checkoutItemCounter = page.cart.lineItems|length %}
-                {% block component_checkout_cart_header_product_info %}
-                    <div class="col-{{ infoColumnSize }} cart-header-info position-relative">
-                        {% if page.cart.lineItems|length > 0 %}
-                            {{ 'checkout.cartHeaderInfoPlural'|trans|sw_sanitize }}
-                            <span class="badge checkout-cart">{{ checkoutItemCounter }}</span>
-                        {% endif %}
-                    </div>
-                {% endblock %}
 
-                {% block component_checkout_cart_header_quantity %}
-                {% endblock %}
+                <div class="col-{{ infoColumnSize }} cart-header-info position-relative">
+                    {% if checkoutItemCounter > 0 %}
+                        {{ 'checkout.cartHeaderInfoPlural'|trans|sw_sanitize }}
+                        <span class="badge checkout-cart">{{ checkoutItemCounter }}</span>
+                    {% endif %}
+                </div>
+            {% endblock %}
 
-                {% if showTaxPrice %}
-                    {% block component_checkout_cart_header_tax_price %}
-                    {% endblock %}
-                {% else %}
-                    {% block component_checkout_cart_header_unit_price %}
-                    {% endblock %}
-                {% endif %}
+            {# Remove columns #}
+            {% block component_checkout_cart_header_quantity %}{% endblock %}
 
-                {% block component_checkout_cart_header_total_price %}
-                {% endblock %}
-            </div>
-        </li>
-    {% endblock %}
+            {% if showTaxPrice %}
+                {% block component_checkout_cart_header_tax_price %}{% endblock %}
+            {% else %}
+                {% block component_checkout_cart_header_unit_price %}{% endblock %}
+            {% endif %}
+
+            {% block component_checkout_cart_header_total_price %}{% endblock %}
+        </div>
+    </li>
 {% endblock %}

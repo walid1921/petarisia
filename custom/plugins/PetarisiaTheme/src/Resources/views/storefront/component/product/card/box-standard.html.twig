@@ -1,19 +1,26 @@
 {% sw_extends '@Storefront/storefront/component/product/card/box-standard.html.twig' %}
 
+{% block component_product_box_rating %}
+{% endblock %}
 
+{% block component_product_box_name %}
+    {% if headlineLevel is not empty %}
+        {{ "<h#{headlineLevel} class=\"#{headlineClasses}\">"|raw }}
+        <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+           class="product-name stretched-link">
+            {{ name|u.truncate(25, '...') }}
+        </a>
+        {{ "</h#{headlineLevel}>"|raw }}
+    {% else %}
+        <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+           class="product-name stretched-link">
+            {{ name|u.truncate(25, '...') }}
+        </a>
+    {% endif %}
+{% endblock %}
 
-
-
-
-{#{% block component_product_box_content %}#}
-
-{#{% endblock %}#}
-
-
-
-
- {% block component_product_box_rating %}
- {% endblock %}
+{% block component_product_box_variant_characteristics %}
+{% endblock %}
 
 {% block component_product_box_description %}
 {% endblock %}
