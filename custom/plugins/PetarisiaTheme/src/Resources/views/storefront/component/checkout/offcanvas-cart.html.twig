@@ -1,220 +1,111 @@
 {% sw_extends '@Storefront/storefront/component/checkout/offcanvas-cart.html.twig' %}
 
-{% block utilities_offcanvas_meta %}
-    {% set isAjaxOffcanvas = true %}
+{# 1) Custom header (headline becomes a link when cart not empty + custom counter with bag icon + badge) #}
+{% block component_offcanvas_cart_header %}
+    {% set isCartNotEmpty = (page.cart.lineItems|length > 0) %}
+    {% set checkoutItemCounter = page.cart.lineItems|length %}
 
-    {{ parent() }}
-{% endblock %}
+    <div class="row align-items-center offcanvas-cart-header">
+        {% block component_offcanvas_cart_header_item_counter %}
+            <div class="col-auto position-relative">
+                <small class="offcanvas-cart-header-count">
+                    {% sw_icon 'bag' %}
 
-{% block utilities_offcanvas_close_text %}
-    {{ 'checkout.continueShopping'|trans|sw_sanitize }}
-{% endblock %}
-
-{% block utilities_offcanvas_close_icon %}
-    {% sw_icon 'arrow-head-left' style { size: 'sm' } %}
-{% endblock %}
-
-{% block utilities_offcanvas_content %}
-    {% block component_offcanvas_cart %}
-        {% set isCartNotEmpty = (page.cart.lineItems|length > 0) %}
-
-        <div class="offcanvas-cart">
-
-            {# Header + Item Counter #}
-            {% block component_offcanvas_cart_header %}
-                <div class="row align-items-center offcanvas-cart-header">
-                    {# Item Counter #}
-                    {% set checkoutItemCounter = page.cart.lineItems|length %}
-                    {% block component_offcanvas_cart_header_item_counter %}
-                            <div class="col-auto position-relative">
-                                <small class="offcanvas-cart-header-count">
-                                    {% sw_icon 'bag'%}
-
-                                    {% if isCartNotEmpty %}
-                                        <span class="badge checkout-cart">
-                                            {#  {{- 'checkout.itemCounter'|trans({'%count%': checkoutItemCounter})|sw_sanitize -}}#}
-                                            {{ checkoutItemCounter }}
-                                        </span>
-                                    {% endif %}
-                                </small>
-                            </div>
-                    {% endblock %}
-
-
-                    <div class="col {% if not isCartNotEmpty %}p-0{% endif %}">
-                        {% if isCartNotEmpty %}
-                            <a href="{{ path('frontend.checkout.cart.page') }}"
-                               class="link-underline-black title"
-                               data-id="off-canvas-headline"
-                               title="{{ 'checkout.proceedToCart'|trans|striptags }}">
-                                {{- 'checkout.cartHeader'|trans|sw_sanitize -}}
-                            </a>
-                        {% else %}
-                            <span class="cart-header">
-                                {{- 'checkout.cartHeader'|trans|sw_sanitize -}}
-                            </span>
-                        {% endif %}
-                    </div>
-
-
-                </div>
-            {% endblock %}
-
-
-            {% include '@MotivationBarPetarisia/storefront/component/motivation-bar/motivation-bar.html.twig' ignore missing %}
-
-            {% block component_offcanvas_cart_flashbags %}
-            {% endblock %}
-
-            {% if isCartNotEmpty %}
-                {% block component_offcanvas_cart_items %}
-                    <ul class="offcanvas-cart-items list-unstyled">
-                        {% for lineItem in page.cart.lineItems %}
-                            {% block component_offcanvas_cart_item %}
-                                {% sw_include '@Storefront/storefront/component/line-item/line-item.html.twig' with {
-                                    displayMode: 'offcanvas',
-                                    redirectTo: 'frontend.cart.offcanvas'
-                                } %}
-                            {% endblock %}
-                        {% endfor %}
-                    </ul>
-                {% endblock %}
-            {% else %}
-                <div class="offcanvas-cart-empty-wrapper">
-                    {% block component_offcanvas_cart_empty %}
-                        {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
-                            type: 'info',
-                            content: 'checkout.emptyCart'|trans|sw_sanitize,
-                            subContent: 'checkout.emptyCartSubtext'|trans|sw_sanitize
-                        } %}
-                    {% endblock %}
-
-                    {% block component_offcanvas_cart_suggestion %}
-                        <div class="offcanvas-cart-suggestions">
-
-                            {% set bagsLink = theme_config('offcanvas-bags-link') %}
-                            {% set bagsImage = theme_config('offcanvas-bags-image') %}
-                            {% set bagsTitle = theme_config('offcanvas-bags-title') %}
-                            {% set bagsDescription = theme_config('offcanvas-bags-description') %}
-                            {% set bagsEnabled = theme_config('offcanvas-bags-enabled') %}
-
-                            {% set accessoriesLink = theme_config('offcanvas-accessories-link') %}
-                            {% set accessoriesImage = theme_config('offcanvas-accessories-image') %}
-                            {% set accessoriesTitle = theme_config('offcanvas-accessories-title') %}
-                            {% set accessoriesDescription = theme_config('offcanvas-accessories-description') %}
-                            {% set accessoriesEnabled = theme_config('offcanvas-accessories-enabled') %}
-
-                            {% if bagsEnabled and bagsLink %}
-                                {% sw_include '@Storefront/storefront/component/checkout/offcanvas-cart-suggestion.html.twig' with {
-                                    title: bagsTitle,
-                                    description: bagsDescription,
-                                    link: bagsLink,
-                                    image: bagsImage
-                                } %}
-                            {% endif %}
-
-                            {% if accessoriesEnabled and accessoriesLink %}
-                                {% sw_include '@Storefront/storefront/component/checkout/offcanvas-cart-suggestion.html.twig' with {
-                                    title: accessoriesTitle,
-                                    description: accessoriesDescription,
-                                    link: accessoriesLink,
-                                    image: accessoriesImage
-                                } %}
-                            {% endif %}
-
-                        </div>
-                    {% endblock %}
-                </div>
-            {% endif %}
-
-            {% if isCartNotEmpty %}
-                {% block component_offcanvas_summary %}
-                    {% sw_include '@Storefront/storefront/component/checkout/offcanvas-cart-summary.html.twig' %}
-                {% endblock %}
-            {% endif %}
-
-            {% block component_offcanvas_cart_actions %}
-                <div class="offcanvas-cart-actions">
-                    {% block component_offcanvas_cart_actions_promotion %}
-                        {% if isCartNotEmpty %}
-                            <div class="js-offcanvas-cart-promotion">
-                                {% block component_offcanvas_cart_actions_promotion_form %}
-                                    <form action="{{ path('frontend.checkout.promotion.add') }}"
-                                          class="offcanvas-cart-promotion-form js-offcanvas-cart-add-promotion"
-                                          method="post">
-                                        {% block component_offcanvas_cart_actions_promotion_redirect %}
-                                            <input type="hidden"
-                                                   name="redirectTo"
-                                                   value="frontend.cart.offcanvas">
-                                        {% endblock %}
-
-                                        {% block component_offcanvas_cart_actions_promotion_label %}
-                                            <label class="mb-1" for="addPromotionOffcanvasCartInput">
-                                                {{ 'checkout.addPromotionLabel'|trans|sw_sanitize }}
-                                            </label>
-                                        {% endblock %}
-
-                                        {% block component_offcanvas_cart_actions_promotion_input_group %}
-                                            <div class="input-group">
-                                                {% block component_offcanvas_cart_actions_promotion_input %}
-                                                    <input type="text"
-                                                           name="code"
-                                                           class="form-control"
-                                                           placeholder="{{ 'checkout.addPromotionPlaceholder'|trans|striptags }}"
-                                                           id="addPromotionOffcanvasCartInput"
-                                                           aria-label="{{ 'checkout.addPromotionLabel'|trans|striptags }}"
-                                                           aria-describedby="addPromotionOffcanvasCart"
-                                                           required="required"
-                                                           aria-invalid="false">
-                                                {% endblock %}
-
-                                                {% block component_offcanvas_cart_actions_promotion_submit %}
-                                                    <button class="btn btn-outline-secondary offcanvas-cart-promotion-button"
-                                                            type="submit"
-                                                            id="addPromotionOffcanvasCart"
-                                                            aria-labelledby="addPromotionOffcanvasCartInput">
-                                                        {% sw_icon 'checkmark' %}
-                                                    </button>
-                                                {% endblock %}
-                                            </div>
-                                        {% endblock %}
-                                    </form>
-                                {% endblock %}
-                            </div>
-                        {% endif %}
-                    {% endblock %}
-
-                    {# Checkout Button #}
-                    {% block component_offcanvas_cart_actions_checkout %}
-                        {% if isCartNotEmpty %}
-                            <div class="d-flex align-items-center justify-content-center mb-5">
-                                <a href="{{ path('frontend.checkout.confirm.page') }}"
-                                   class="btn w-100 begin-checkout-btn{% if isCartNotEmpty %} button-primary{% else %} btn-light disabled{% endif %}"
-                                   title="{{ 'checkout.proceedToCheckout'|trans|striptags }}">
-                                    {% if isCartNotEmpty %}
-                                        {% sw_icon 'cart' style {
-                                            color: 'text-white'
-                                        } %}
-                                    {% endif %}
-                                    <span class="ms-2">
-                                        {{ 'checkout.proceedToCheckout'|trans|sw_sanitize }}
-                                    </span>
-                                </a>
-                            </div>
-                        {% endif %}
-                    {% endblock %}
-
-                    {% block component_offcanvas_cart_actions_cart %}
-                    {% endblock %}
-                </div>
-            {% endblock %}
-        </div>
-
-        {% block component_offcanvas_cart_hidden_line_items_information %}
-            {% sw_include '@Storefront/storefront/component/checkout/hidden-line-items-information.html.twig' with {
-                cart: page.cart,
-                lineItems: page.cart.lineItems
-            } %}
+                    {% if isCartNotEmpty %}
+                        <span class="badge checkout-cart">
+                            {{ checkoutItemCounter }}
+                        </span>
+                    {% endif %}
+                </small>
+            </div>
         {% endblock %}
-    {% endblock %}
+
+        <div class="col {% if not isCartNotEmpty %}p-0{% endif %}">
+            {% if isCartNotEmpty %}
+                <a href="{{ path('frontend.checkout.cart.page') }}"
+                   class="link-underline-black title"
+                   data-id="off-canvas-headline"
+                   title="{{ 'checkout.proceedToCart'|trans|striptags }}">
+                    {{- 'checkout.cartHeader'|trans|sw_sanitize -}}
+                </a>
+            {% else %}
+                <span class="cart-header">
+                    {{- 'checkout.cartHeader'|trans|sw_sanitize -}}
+                </span>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
+
+{# 2) Insert motivation bar and remove flash messages output #}
+{% block component_offcanvas_cart_flashbags %}
+    {% include '@MotivationBarPetarisia/storefront/component/motivation-bar/motivation-bar.html.twig' ignore missing %}
+{% endblock %}
+
+{# 3) If cart is Empty: add subContent + suggestions (bags/accessories) #}
+{% block component_offcanvas_cart_empty %}
+    <div class="offcanvas-cart-empty-wrapper">
+        {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+            type: 'info',
+            content: 'checkout.emptyCart'|trans|sw_sanitize,
+            subContent: 'checkout.emptyCartSubtext'|trans|sw_sanitize
+        } %}
+
+        {% block component_offcanvas_cart_suggestion %}
+            <div class="offcanvas-cart-suggestions">
+
+                {% set bagsLink = theme_config('offcanvas-bags-link') %}
+                {% set bagsImage = theme_config('offcanvas-bags-image') %}
+                {% set bagsTitle = theme_config('offcanvas-bags-title') %}
+                {% set bagsDescription = theme_config('offcanvas-bags-description') %}
+                {% set bagsEnabled = theme_config('offcanvas-bags-enabled') %}
+
+                {% set accessoriesLink = theme_config('offcanvas-accessories-link') %}
+                {% set accessoriesImage = theme_config('offcanvas-accessories-image') %}
+                {% set accessoriesTitle = theme_config('offcanvas-accessories-title') %}
+                {% set accessoriesDescription = theme_config('offcanvas-accessories-description') %}
+                {% set accessoriesEnabled = theme_config('offcanvas-accessories-enabled') %}
+
+                {% if bagsEnabled and bagsLink %}
+                    {% sw_include '@Storefront/storefront/component/checkout/offcanvas-cart-suggestion.html.twig' with {
+                        title: bagsTitle,
+                        description: bagsDescription,
+                        link: bagsLink,
+                        image: bagsImage
+                    } %}
+                {% endif %}
+
+                {% if accessoriesEnabled and accessoriesLink %}
+                    {% sw_include '@Storefront/storefront/component/checkout/offcanvas-cart-suggestion.html.twig' with {
+                        title: accessoriesTitle,
+                        description: accessoriesDescription,
+                        link: accessoriesLink,
+                        image: accessoriesImage
+                    } %}
+                {% endif %}
+
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{# 4) Checkout button: only show when cart not empty + custom styling + cart icon #}
+{% block component_offcanvas_cart_actions_checkout %}
+    {% set isCartNotEmpty = (page.cart.lineItems|length > 0) %}
+
+    {% if isCartNotEmpty %}
+        <div class="d-flex align-items-center justify-content-center mb-5">
+            <a href="{{ path('frontend.checkout.confirm.page') }}"
+               class="btn w-100 begin-checkout-btn button-primary"
+               title="{{ 'checkout.proceedToCheckout'|trans|striptags }}">
+                {% sw_icon 'cart' style { color: 'text-white' } %}
+                <span class="ms-2">
+                    {{ 'checkout.proceedToCheckout'|trans|sw_sanitize }}
+                </span>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{# 5) Remove the "go to cart" button in actions #}
+{% block component_offcanvas_cart_actions_cart %}{% endblock %}

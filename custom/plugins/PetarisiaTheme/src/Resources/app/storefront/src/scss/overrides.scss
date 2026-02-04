@@ -1,19 +1,19 @@
-//$sw-color-brand-primary: #1C1C1C;
-//$sw-color-brand-secondary: #ababab;
-//$sw-border-color: #bbb;
-//$sw-background-color: #F5F5F5;
-//$sw-font-family-base: 'Montserrat', sans-serif;
-//$sw-font-family-headline: 'Montserrat', sans-serif;
-//$sw-text-color: #2b3136;
-//$sw-headline-color: #2b3136;
-//$sw-color-price: #2b3136;
-//$sw-color-buy-button: #1C1C1C;
-//$sw-color-buy-button-text: #fff;
-//
-//$sw-color-success: #1B8655;
-//$sw-color-info: #212529;
-//$sw-color-warning: #FFC008;
-//$sw-color-danger: #DB3545;
+$sw-color-brand-primary: #1C1C1C;
+$sw-color-brand-secondary: #ababab;
+$sw-border-color: #bbb;
+$sw-background-color: #F5F5F5;
+$sw-font-family-base: 'Montserrat', sans-serif;
+$sw-font-family-headline: 'Montserrat', sans-serif;
+$sw-text-color: #2b3136;
+$sw-headline-color: #2b3136;
+$sw-color-price: #2b3136;
+$sw-color-buy-button: #1C1C1C;
+$sw-color-buy-button-text: #fff;
+
+$sw-color-success: #1B8655;
+$sw-color-info: #212529;
+$sw-color-warning: #FFC008;
+$sw-color-danger: #DB3545;
 
 //$sw-border-color:#0042a0;
 
@@ -123,7 +123,8 @@ input[type="checkbox"] {
 //}
 
 .product-badges  {
-  top: 0 !important;
+  top: 10px !important;
+  left: 10px !important;
 
   .badge {
     background-color: $sw-color-brand-primary;
