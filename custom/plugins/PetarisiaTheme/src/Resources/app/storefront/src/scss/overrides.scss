@@ -122,21 +122,6 @@ input[type="checkbox"] {
 //  max-height: 400px !important;
 //}
 
-.product-badges  {
-  top: 10px !important;
-  left: 10px !important;
-
-  .badge {
-    background-color: $sw-color-brand-primary;
-    font-size: .75rem !important;
-    margin: 0 !important;
-    line-height: 0;
-    border: 1px solid $sw-color-brand-primary !important;
-    border-radius: $border-radius;
-    padding: 0 .5rem;
-  }
-}
-
 
 
 //$form-check-input-focus-border: trasparent !important;
@@ -405,7 +390,7 @@ input[type="checkbox"] {
 .line-item-info {
   display: flex !important;
   flex: 0 0 auto;
-  width: 80% !important;
+  width: 68% !important;
   padding: 0 !important;
   margin-top: 0 !important;
   margin-bottom: 1rem !important;
@@ -464,7 +449,6 @@ input[type="checkbox"] {
 .line-item-details-container {
   display: flex;
   flex-direction: column;
-  min-width: 0;
   padding: 0 !important;
   justify-content: space-between;
   height: 100% !important;
