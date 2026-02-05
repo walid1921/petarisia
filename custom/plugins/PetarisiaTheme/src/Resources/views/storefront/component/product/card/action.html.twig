@@ -1,5 +1,11 @@
 {% sw_extends '@Storefront/storefront/component/product/card/action.html.twig' %}
 
-{% block component_product_box_action_inner %}
-    {{ parent() }}
+{% block component_product_box_action_buy_button %}
+    <div class="d-grid">
+        <button class="btn btn-buy btn-buy--icon">
+            {% block page_product_detail_product_buy_button_label %}
+                {% sw_icon 'plus' style {color: white} %}
+            {% endblock %}
+        </button>
+    </div>
 {% endblock %}

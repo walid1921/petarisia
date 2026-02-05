@@ -1,26 +1,40 @@
 {% sw_extends '@Storefront/storefront/component/product/card/box-standard.html.twig' %}
 
-{% block component_product_box_rating %}
-{% endblock %}
+{% block component_product_box_info %}
+    <div class="product-info-wrapper">
+        <div class="product-info">
+            {% block component_product_box_rating %}
+            {% endblock %}
 
-{% block component_product_box_name %}
-    {% if headlineLevel is not empty %}
-        {{ "<h#{headlineLevel} class=\"#{headlineClasses}\">"|raw }}
-        <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
-           class="product-name stretched-link">
-            {{ name|u.truncate(25, '...') }}
-        </a>
-        {{ "</h#{headlineLevel}>"|raw }}
-    {% else %}
-        <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
-           class="product-name stretched-link">
-            {{ name|u.truncate(25, '...') }}
-        </a>
-    {% endif %}
-{% endblock %}
+            {% block component_product_box_name %}
+                {% if headlineLevel is not empty %}
+                    {{ "<h#{headlineLevel} class=\"#{headlineClasses}\">"|raw }}
+                    <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+                       class="product-name stretched-link">
+                        {{ name|u.truncate(25, '...') }}
+                    </a>
+                    {{ "</h#{headlineLevel}>"|raw }}
+                {% else %}
+                    <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+                       class="product-name stretched-link">
+                        {{ name|u.truncate(25, '...') }}
+                    </a>
+                {% endif %}
+            {% endblock %}
 
-{% block component_product_box_variant_characteristics %}
-{% endblock %}
+            {% block component_product_box_variant_characteristics %}
+            {% endblock %}
 
-{% block component_product_box_description %}
+            {% block component_product_box_description %}
+            {% endblock %}
+
+            {% block component_product_box_price %}
+                {% sw_include '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
+            {% endblock %}
+        </div>
+
+        {% block component_product_box_action %}
+            {% sw_include '@Storefront/storefront/component/product/card/action.html.twig' %}
+        {% endblock %}
+    </div>
 {% endblock %}
