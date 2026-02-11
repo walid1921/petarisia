@@ -1,111 +1,74 @@
 {% sw_extends '@Storefront/storefront/page/account/sidebar.html.twig' %}
 
 
-
-{% block page_account_sidebar_inner %}
-    <div class="{% if not headerWidget %}account-aside{% else %}header-account-menu{% endif %}">
-        <div class="card account-menu-inner">
-            {% block page_account_sidebar_header %}
-                {% if not headerWidget %}
-                    <div class="card-header account-aside-header">
-                        {{ 'account.greetings'|trans|sw_sanitize }}
-                        {{ context.customer.title }}
-                        {{ context.customer.firstName }}
-                        {{ context.customer.lastName }}
-                    </div>
-                {% endif %}
-            {% endblock %}
-
-            {% block page_account_sidebar_menu %}
-                {% if not context.customer.guest %}
-                    <nav class="list-group gap-1 list-group-flush account-aside-list-group"{% if headerWidget == null %} aria-label="{{ 'account.myAccount'|trans|striptags }}"{% endif %}>
-                        {% block page_account_sidebar_menu_inner %}
-                            {% block page_account_sidebar_link_home %}
-                                <a href="{{ path('frontend.account.home.page') }}"
-                                   title="{{ 'account.overviewLink'|trans|striptags }}"
-                                   class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.home.page') %} is-active{% endif %}"
-                                        {% if activeRoute is same as('frontend.account.home.page') %} aria-current="page"{% endif %}>
-
-                                    {% sw_icon 'dashboard' style {size: 'sm'} %}
-
-                                    <span class="ms-2">
-                                    {{ 'account.overviewLink'|trans|sw_sanitize }}
-                                        </span>
-                                </a>
-                            {% endblock %}
-
-                            {% block page_account_sidebar_link_profile %}
-                                <a href="{{ path('frontend.account.profile.page') }}"
-                                   title="{{ 'account.profileLink'|trans|striptags }}"
-                                   class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.profile.page') %} is-active{% endif %}"
-                                        {% if activeRoute is same as('frontend.account.profile.page') %} aria-current="page"{% endif %}>
-
-                                    {% sw_icon 'avatar' style {size: 'sm'} %}
-                                    <span class="ms-2">
-                                        {{ 'account.profileLink'|trans|sw_sanitize }}
-                                    </span>
-                                </a>
-                            {% endblock %}
-
-                            {% block page_account_sidebar_link_address %}
-                                {# Using "starts with" here to determine the active state because there are multiple routes under "frontend.account.address". #}
-                                {# Addresses menu item should also be active for "edit" or "create". #}
-                                <a href="{{ path('frontend.account.address.page') }}"
-                                   title="{{ 'account.addressLink'|trans|striptags }}"
-                                   class="list-group-item list-group-item-action account-aside-item{% if activeRoute starts with('frontend.account.address') %} is-active{% endif %}"
-                                        {% if activeRoute starts with('frontend.account.address.page') %} aria-current="page"{% endif %}>
-
-                                    {% sw_icon 'address' style {size: 'sm'}%}
-
-                                    <span class="ms-2">
-                                    {{ 'account.addressLink'|trans|sw_sanitize }}
-                                     </span>
-                                </a>
-                            {% endblock %}
-
-                            {% block page_account_sidebar_link_orders %}
-                                <a href="{{ path('frontend.account.order.page') }}"
-                                   title="{{ 'account.ordersLink'|trans|striptags }}"
-                                   class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.order.page') %} is-active{% endif %}"
-                                        {% if activeRoute is same as('frontend.account.order.page') %} aria-current="page"{% endif %}>
-
-                                    {% sw_icon 'bag' style {size: 'sm'}%}
-                                    <span class="ms-2">
-                                    {{ 'account.ordersLink'|trans|sw_sanitize }}
-                                      </span>
-                                </a>
-                            {% endblock %}
-
-                            {% block page_account_sidebar_footer %}
-                                {% if context.customer %}
-                                    {% if not context.customer.guest %}
-                                        {% block page_account_sidebar_logout %}
-                                            <a href="{{ path('frontend.account.logout.page') }}"
-                                               class="list-group-item list-group-item-action account-aside-item btn-logout">
-                                                {% sw_icon 'log-out' style {size: 'sm'} -%}
-                                                <span class="ms-3">
-                             {{- 'account.logout'|trans|sw_sanitize }}
-                         </span>
-                                            </a>
-                                        {% endblock %}
-                                    {% else %}
-                                        {% block page_account_sidebar_guest_abort %}
-                                            <a href="{{ path('frontend.account.logout.page') }}"
-                                               data-account-guest-abort-button="true"
-                                               class="list-group-item list-group-item-action account-aside-item btn-logout">
-                                                {% sw_icon 'log-out' style {size: 'sm'} -%}
-                                                <span class="ms-1">
-                             {{- 'account.guestAbort'|trans|sw_sanitize }}
-                         </span>
-                                            </a>
-                                        {% endblock %}
-                                    {% endif %}
-                                {% endif %}
-                            {% endblock %}
-                        {% endblock %}
-                    </nav>
-                {% endif %}
-            {% endblock %}
+{% block page_account_sidebar_header %}
+    {% if not headerWidget %}
+        <div class="card-header account-aside-header">
+            {{ 'account.greetings'|trans|sw_sanitize }}
+            {{ context.customer.title }}
+            {{ context.customer.firstName }}
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
+
+
+{% block page_account_sidebar_menu %}
+    {% if not context.customer.guest %}
+        <nav class="list-group gap-1 mt-2 list-group-flush account-aside-list-group"{% if headerWidget == null %} aria-label="{{ 'account.myAccount'|trans|striptags }}"{% endif %}>
+            {% block page_account_sidebar_menu_inner %}
+                {% block page_account_sidebar_link_home %}
+                    <a href="{{ path('frontend.account.home.page') }}"
+                       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.home.page') %} is-active{% endif %}"
+                            {% if activeRoute is same as('frontend.account.home.page') %} aria-current="page"{% endif %}>
+                        {% sw_icon 'dashboard' style { size: 'sm' } %}
+                        <span class="ms-2">{{ 'account.overviewLink'|trans|sw_sanitize }}</span>
+                    </a>
+                {% endblock %}
+
+                {% block page_account_sidebar_link_profile %}
+                    <a href="{{ path('frontend.account.profile.page') }}"
+                       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.profile.page') %} is-active{% endif %}"
+                            {% if activeRoute is same as('frontend.account.profile.page') %} aria-current="page"{% endif %}>
+                        {% sw_icon 'avatar' style { size: 'sm' } %}
+                        <span class="ms-2">{{ 'account.profileLink'|trans|sw_sanitize }}</span>
+                    </a>
+                {% endblock %}
+
+                {% block page_account_sidebar_link_address %}
+                    <a href="{{ path('frontend.account.address.page') }}"
+                       class="list-group-item list-group-item-action account-aside-item{% if activeRoute starts with('frontend.account.address') %} is-active{% endif %}">
+                        {% sw_icon 'address' style { size: 'sm' } %}
+                        <span class="ms-2">{{ 'account.addressLink'|trans|sw_sanitize }}</span>
+                    </a>
+                {% endblock %}
+
+                {% block page_account_sidebar_link_orders %}
+                    <a href="{{ path('frontend.account.order.page') }}"
+                       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.order.page') %} is-active{% endif %}">
+                        {% sw_icon 'bag' style { size: 'sm' } %}
+                        <span class="ms-2">{{ 'account.ordersLink'|trans|sw_sanitize }}</span>
+                    </a>
+                {% endblock %}
+            {% endblock %}
+
+            {% if context.customer %}
+                {% if not context.customer.guest %}
+                    <a href="{{ path('frontend.account.logout.page') }}"
+                       class="list-group-item list-group-item-action account-aside-item btn-logout">
+                        {% sw_icon 'log-out' style { size: 'sm' } -%}
+                        <span class="ms-3">{{ 'account.logout'|trans|sw_sanitize }}</span>
+                    </a>
+                {% else %}
+                    <a href="{{ path('frontend.account.logout.page') }}"
+                       data-account-guest-abort-button="true"
+                       class="list-group-item list-group-item-action account-aside-item btn-logout">
+                        {% sw_icon 'log-out' style { size: 'sm' } -%}
+                        <span class="ms-1">{{ 'account.guestAbort'|trans|sw_sanitize }}</span>
+                    </a>
+                {% endif %}
+            {% endif %}
+        </nav>
+    {% endif %}
+{% endblock %}
+
+{% block page_account_sidebar_footer %}{% endblock %}
