@@ -1,6 +1,6 @@
 {% sw_extends '@Storefront/storefront/component/checkout/offcanvas-cart.html.twig' %}
 
-{# 1) Custom header (headline becomes a link when cart not empty + custom counter with bag icon + badge) #}
+{# Custom header (headline becomes a link when cart not empty) #}
 {% block component_offcanvas_cart_header %}
     {% set isCartNotEmpty = (page.cart.lineItems|length > 0) %}
     {% set checkoutItemCounter = page.cart.lineItems|length %}
@@ -37,12 +37,12 @@
     </div>
 {% endblock %}
 
-{# 2) Insert motivation bar and remove flash messages output #}
+{# Insert motivation bar and remove flash messages #}
 {% block component_offcanvas_cart_flashbags %}
     {% include '@MotivationBarPetarisia/storefront/component/motivation-bar/motivation-bar.html.twig' ignore missing %}
 {% endblock %}
 
-{# 3) If cart is Empty: add subContent + suggestions (bags/accessories) #}
+{# If cart is Empty #}
 {% block component_offcanvas_cart_empty %}
     <div class="offcanvas-cart-empty-wrapper">
         {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
@@ -89,7 +89,7 @@
     </div>
 {% endblock %}
 
-{# 4) Checkout button: only show when cart not empty + custom styling + cart icon #}
+{# Checkout button: only isCartNotEmpty #}
 {% block component_offcanvas_cart_actions_checkout %}
     {% set isCartNotEmpty = (page.cart.lineItems|length > 0) %}
 
@@ -107,5 +107,5 @@
     {% endif %}
 {% endblock %}
 
-{# 5) Remove the "go to cart" button in actions #}
+{# Remove "go to cart" btn #}
 {% block component_offcanvas_cart_actions_cart %}{% endblock %}

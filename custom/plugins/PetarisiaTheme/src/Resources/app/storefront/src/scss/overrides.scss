@@ -351,6 +351,7 @@ input[type="checkbox"] {
 
 .quantity-characteristics-wrapper{
   width: 100% !important;
+  padding-right: 10px;
 }
 
 .line-item-header {
@@ -617,13 +618,15 @@ input[type="checkbox"] {
   //flex-wrap: wrap;
   gap: 3rem;
   width: 100% !important;
-  height: 60vh !important;
+  height: 100vh !important;
 
   .checkout-main{
     width: 50% !important;
     height: 100% !important;
     overflow-y: auto;
     overflow-x: hidden;
+    background-color: white !important;
+    border: 1px solid $sw-border-color !important;
   }
 
   .checkout_cart_shipping {
@@ -680,10 +683,15 @@ input[type="checkbox"] {
 
 .checkout-product-table{
   margin-bottom: 0 !important;
+  padding: 30px 35px !important;
 }
 
 .checkout-aside-summary-list{
   margin-bottom: 0 !important;
+}
+
+.confirm-main-header, .confirm-tos, .confirm-address, .confirm-payment-shipping, .confirm-payment, .confirm-product {
+  padding: 30px 35px !important;
 }
 
 

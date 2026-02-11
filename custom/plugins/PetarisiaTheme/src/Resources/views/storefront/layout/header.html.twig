@@ -1,8 +1,34 @@
 {% sw_extends '@Strorefront/storefront/layout/header.html.twig' %}
 
 
-    {% block base_header_inner %}
-        <div class="bg-primary">
-            {{ parent() }}
-        </div>
-    {% endblock %}
+{% block header %}
+    <header class="header-sticky">
+        {% block base_header %}
+            {% sw_include '@Storefront/storefront/utilities/staging-info.html.twig' %}
+
+            {% block base_header_inner %}
+                <div class="bg-primary">
+                    {{ parent() }}
+                </div>
+            {% endblock %}
+        {% endblock %}
+
+        {% block base_navigation %}
+            <div class="nav-main">
+                {% block base_navigation_inner %}
+                    {% sw_include '@Storefront/storefront/layout/navbar/navbar.html.twig' with { header: header } %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block base_offcanvas_navigation %}
+            {% if header.navigation %}
+                <div class="d-none js-navigation-offcanvas-initial-content">
+                    {% block base_offcanvas_navigation_inner %}
+                        {% sw_include '@Storefront/storefront/layout/navigation/offcanvas/navigation.html.twig' with { navigation: header.navigation } %}
+                    {% endblock %}
+                </div>
+            {% endif %}
+        {% endblock %}
+    </header>
+{% endblock %}

@@ -4,8 +4,21 @@
     <div class="d-grid">
         <button class="btn btn-buy btn-buy--icon">
             {% block page_product_detail_product_buy_button_label %}
-                {% sw_icon 'plus' style {color: white} %}
+                {% sw_icon 'plus' %}
             {% endblock %}
         </button>
+    </div>
+{% endblock %}
+
+{% block component_product_box_action_detail %}
+    <div class="d-grid">
+        <a href="{{ seoUrl('frontend.detail.page', {productId: id}) }}"
+           class="btn btn-buy btn-buy--icon">
+            {% block component_product_box_action_detail_label %}
+                {% sw_icon 'hero-arrow-up-right' style {
+                    namespace: 'PetarisiaTheme'
+                } %}
+            {% endblock %}
+        </a>
     </div>
 {% endblock %}

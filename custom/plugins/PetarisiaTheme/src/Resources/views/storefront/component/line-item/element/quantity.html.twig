@@ -1,9 +1,6 @@
 {% sw_extends '@Storefront/storefront/component/line-item/element/quantity.html.twig' %}
 
 {% block component_line_item_quantity_inner %}
-    {# removed: <div class="row line-item-quantity-row"> #}
-
-    {# removed: label output #}
     {% block component_line_item_quantity_label %}{% endblock %}
 
     {% block component_line_item_quantity_select_wrapper %}
@@ -32,11 +29,8 @@
             {% endif %}
         </div>
     {% endblock %}
-
-    {# removed: closing </div> for the row wrapper #}
 {% endblock %}
 
-{# Only change the bits inside the selector UI #}
 {% block component_line_item_quantity_select_input %}
     <legend class="form-label visually-hidden">
         {{ 'component.product.quantitySelect.legend'|trans|striptags }}
