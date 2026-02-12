@@ -250,6 +250,12 @@ input[type="checkbox"] {
   top: 0 !important;
 }
 
+@media (min-width: 576px) {
+  .header-cart-badge {
+    display: inline-block !important;
+  }
+}
+
 
 .offcanvas .offcanvas-close {
   display: flex;
@@ -698,4 +704,33 @@ input[type="checkbox"] {
 .top-bar{
   background-color: $pt-info-top-bar-background;
   color: $pt-info-top-bar-text;
+}
+
+
+
+.dropdown-toggle::after{
+  display: none !important;
+}
+
+.icon-xs .icon {
+  margin-left: 6px;
+  width: 12px;
+  height: 12px;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+
+.nav-link.active {
+  color: var(--bs-navbar-active-color);
+  font-weight: 600;
+}
+
+.main-navigation-link-text {
+  border: none !important;
+}
+
+
+.dropdown-menu {
+  --bs-dropdown-bg: #fff !important;
 }

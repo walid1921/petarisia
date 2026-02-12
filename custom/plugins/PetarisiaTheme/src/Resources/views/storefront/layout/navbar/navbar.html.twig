@@ -54,6 +54,11 @@
                                                     {% block layout_navbar_menu_item_link_content %}
                                                         <span itemprop="name" class="main-navigation-link-text">{{ name }}</span>
                                                     {% endblock %}
+                                                    {% if hasChildren %}
+                                                        <span class="icon-xs">
+                                                            {% sw_icon 'arrow-head-down' %}
+                                                        </span>
+                                                    {% endif %}
                                                 </a>
                                             {% endblock %}
 
