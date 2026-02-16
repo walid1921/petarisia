@@ -1,0 +1,23 @@
+{% sw_extends '@Storefront/storefront/layout/header/actions/language-widget.html.twig' %}
+
+{% block layout_header_actions_language_widget_content_inner %}
+    <span>
+        {% sw_icon 'lucid-globe' style {
+            namespace: 'PetarisiaTheme',
+            size: 'sm'
+        } %}
+    </span>
+    <span class="top-bar-nav-text d-none d-md-inline fs-6">{{ context.languageInfo.name }}</span>
+{% endblock %}
+
+{% block layout_header_actions_languages_widget_form_items_flag_inner %}
+    {% if not feature('v6.8.0.0') %}
+
+        {{ language.name }}
+    {% else %}
+        {% set languageDisplay = language.translationCode.translated.name and language.translationCode.translated.territory
+            ? language.translationCode.translated.name ~ ' (' ~ language.translationCode.translated.territory ~ ')'
+            : (language.translationCode.translated.name ?: language.name) %}
+        {{ languageDisplay }}
+    {% endif %}
+{% endblock %}
