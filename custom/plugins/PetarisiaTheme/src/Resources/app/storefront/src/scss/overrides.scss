@@ -185,15 +185,6 @@ input[type="checkbox"] {
 //  top: 0 !important;
 //}
 
-.icon {
-  display: inline-flex;
-  align-self: center;
-  //font-size: 0 !important;
-  overflow: visible;
-  //color: $sw-color-brand-primary !important;
-  //height: 100% !important;
-  line-height: 0 !important;
-}
 
 
 .header-cart-total {
@@ -667,14 +658,4 @@ input[type="checkbox"] {
 
 .confirm-main-header, .confirm-tos, .confirm-address, .confirm-payment-shipping, .confirm-payment, .confirm-product {
   padding: 30px 35px !important;
-}
-
-
-
-.icon-xs .icon {
-  margin-left: 6px;
-  width: 12px;
-  height: 12px;
-  font-size: 0 !important;
-  line-height: 0 !important;
 }
