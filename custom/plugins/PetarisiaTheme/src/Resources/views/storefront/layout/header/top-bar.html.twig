@@ -27,9 +27,11 @@
                     <div class="top-bar-carousel-track">
                         {% for item in carouselItems %}
                             <div class="top-bar-carousel-item {% if loop.first %}active{% endif %}">
-                                {% sw_icon item.icon style {
-                                    namespace: 'PetarisiaTheme'
-                                } %}
+                                <span class="icon-white">
+                                    {% sw_icon item.icon style {
+                                        namespace: 'PetarisiaTheme'
+                                    } %}
+                                </span>
                                 <span class="fs-6 ms-2">
                                     {{ item.text|trans|sw_sanitize }}
                                 </span>

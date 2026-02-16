@@ -1,0 +1,30 @@
+
+.icon {
+  display: inline-flex;
+  align-self: center;
+  //font-size: 0 !important;
+  overflow: visible;
+  //color: $sw-color-brand-primary !important;
+  //height: 100% !important;
+  line-height: 0 !important;
+}
+
+.icon-white {
+  .icon {
+    //font-size: 0 !important;
+    line-height: 0 !important;
+    svg {
+      fill: white;
+      color: white;
+    }
+  }
+}
+
+
+.icon-xs .icon {
+  margin-left: 6px;
+  width: 12px;
+  height: 12px;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}

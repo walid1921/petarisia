@@ -94,11 +94,15 @@
     {% set isCartNotEmpty = (page.cart.lineItems|length > 0) %}
 
     {% if isCartNotEmpty %}
-        <div class="d-flex align-items-center justify-content-center mb-5">
+        <div class="d-flex align-items-center justify-content-center mb-5 text-white">
             <a href="{{ path('frontend.checkout.confirm.page') }}"
                class="btn w-100 begin-checkout-btn button-primary"
                title="{{ 'checkout.proceedToCheckout'|trans|striptags }}">
-                {% sw_icon 'cart' style { color: 'text-white' } %}
+                <span class="icon-white">
+                 {% sw_icon 'cart' style {
+                     size: 'sm'
+                 }%}
+                </span>
                 <span class="ms-2">
                     {{ 'checkout.proceedToCheckout'|trans|sw_sanitize }}
                 </span>
