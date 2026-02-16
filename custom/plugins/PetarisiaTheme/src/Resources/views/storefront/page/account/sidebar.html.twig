@@ -14,7 +14,7 @@
 
 {% block page_account_sidebar_menu %}
     {% if not context.customer.guest %}
-        <nav class="list-group gap-1 mt-2 list-group-flush account-aside-list-group"{% if headerWidget == null %} aria-label="{{ 'account.myAccount'|trans|striptags }}"{% endif %}>
+        <nav class="list-group gap-1 list-group-flush account-aside-list-group"{% if headerWidget == null %} aria-label="{{ 'account.myAccount'|trans|striptags }}"{% endif %}>
             {% block page_account_sidebar_menu_inner %}
                 {% block page_account_sidebar_link_home %}
                     <a href="{{ path('frontend.account.home.page') }}"

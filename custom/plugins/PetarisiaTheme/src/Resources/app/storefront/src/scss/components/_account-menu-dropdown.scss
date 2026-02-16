@@ -9,7 +9,7 @@
 
 .list-group-item {
   padding-left: 1rem !important;
-
+  background-color: transparent !important;
 }
 
 .list-group-item-action{
@@ -29,7 +29,7 @@
 
 .account-aside-item.btn-logout {
   &:hover {
-    background-color: rgba(255, 229, 229, 0.4) !important;
+    background-color: rgba(255, 229, 229, 0.6) !important;
     color: var(--bs-danger);
     text-decoration: none;
     svg {

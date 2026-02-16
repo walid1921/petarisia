@@ -1,53 +1,61 @@
-{%  sw_extends '@Storefront/storefront/layout/header/top-bar.html.twig' %}
+{% sw_extends '@Storefront/storefront/layout/header/top-bar.html.twig' %}
 
 {% block layout_header_top_bar %}
-    <div class="top-bar d-none d-lg-flex align-items-center justify-content-between">
+    <div class="top-bar d-lg-flex align-items-center justify-content-between">
         {% block layout_header_top_bar_inner %}
-            {% set firstText = theme_config('pt-info-top-bar-text-1') %}
-            {% set secondText = theme_config('pt-info-top-bar-text-2') %}
-            {% set thirdText = theme_config('pt-info-top-bar-text-3') %}
+            {# Left side - empty for balance #}
+            <div class="top-bar-left"></div>
 
-            <div>
-                {% sw_icon 'package' style {
-                    namespace: 'PetarisiaTheme'
-                } %}
-                <span class="fs-6 ms-2">
-                    {{ firstText|trans|sw_sanitize }}
-                </span>
+            {# Center - Carousel #}
+            <div class="top-bar-carousel-wrapper">
+                <div class="top-bar-carousel">
+                    {% set carouselItems = [
+                        {
+                            icon: 'package',
+                            text: theme_config('pt-info-top-bar-text-1')
+                        },
+                        {
+                            icon: 'heart',
+                            text: theme_config('pt-info-top-bar-text-2')
+                        },
+                        {
+                            icon: 'checkmark',
+                            text: theme_config('pt-info-top-bar-text-3')
+                        }
+                    ] %}
+
+                    <div class="top-bar-carousel-track">
+                        {% for item in carouselItems %}
+                            <div class="top-bar-carousel-item {% if loop.first %}active{% endif %}">
+                                {% sw_icon item.icon style {
+                                    namespace: 'PetarisiaTheme'
+                                } %}
+                                <span class="fs-6 ms-2">
+                                    {{ item.text|trans|sw_sanitize }}
+                                </span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
 
-            <div>
-                {% sw_icon 'package' style {
-                    namespace: 'PetarisiaTheme'
-                } %}
-                <span class="fs-6 ms-2">
-                     {{ secondText|trans|sw_sanitize }}
-                </span>
+            {# Right side - Language & Currency #}
+            <div class="top-bar-right d-none d-lg-flex">
+                {% if header.languages.count > 1 or header.currencies.count > 1 %}
+                    <nav class="top-bar-nav d-flex justify-content-center align-items-center gap-3"
+                         aria-label="{{ 'header.topBarAriaLabel'|trans|striptags }}">
+                        {% block layout_header_top_bar_language %}
+                            {% sw_include '@Storefront/storefront/layout/header/actions/language-widget.html.twig' %}
+                        {% endblock %}
+
+                        <span>|</span>
+
+                        {% block layout_header_top_bar_currency %}
+                            {% sw_include '@Storefront/storefront/layout/header/actions/currency-widget.html.twig' %}
+                        {% endblock %}
+                    </nav>
+                {% endif %}
             </div>
-
-            <div>
-                {% sw_icon 'package' style {
-                    namespace: 'PetarisiaTheme'
-                } %}
-                <span class="fs-6 ms-2">
-                      {{ thirdText|trans|sw_sanitize }}
-                </span>
-            </div>
-
-            {% if header.languages.count > 1 or header.currencies.count > 1 %}
-                <nav class="top-bar-nav d-flex justify-content-center align-items-center gap-3"
-                     aria-label="{{ 'header.topBarAriaLabel'|trans|striptags }}">
-                    {% block layout_header_top_bar_language %}
-                        {% sw_include '@Storefront/storefront/layout/header/actions/language-widget.html.twig' %}
-                    {% endblock %}
-
-                    <span>|</span>
-
-                    {% block layout_header_top_bar_currency %}
-                        {% sw_include '@Storefront/storefront/layout/header/actions/currency-widget.html.twig' %}
-                    {% endblock %}
-                </nav>
-            {% endif %}
         {% endblock %}
     </div>
 {% endblock %}
