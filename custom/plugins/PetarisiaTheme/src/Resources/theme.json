@@ -151,17 +151,6 @@
         "tab": "Info Top Bar",
         "block": "Theme colours"
       },
-      "pt-info-top-bar-text": {
-        "label": {
-          "en-GB": "Text colour",
-          "de-DE": "Text colour"
-        },
-        "type": "color",
-        "value": "",
-        "editable": true,
-        "tab": "Info Top Bar",
-        "block": "Theme colours"
-      },
       "pt-info-top-bar-text-1": {
         "label": {
           "en-GB": "Text 1",
@@ -171,18 +160,8 @@
         "value": "",
         "editable": true,
         "tab": "Info Top Bar",
-        "block": "Section 1"
-      },
-      "pt-info-top-bar-icon-1": {
-        "label": {
-          "en-GB": "Text 1",
-          "de-DE": "Inhalt"
-        },
-        "type": "",
-        "value": "",
-        "editable": true,
-        "tab": "Info Top Bar",
-        "block": "Section 1"
+        "block": "Section 1",
+        "scss": false
       },
       "pt-info-top-bar-text-2": {
         "label": {
@@ -193,7 +172,8 @@
         "value": "",
         "editable": true,
         "tab": "Info Top Bar",
-        "block": "Section 2"
+        "block": "Section 2",
+        "scss": false
       },
       "pt-info-top-bar-text-3": {
         "label": {
@@ -204,7 +184,8 @@
         "value": "",
         "editable": true,
         "tab": "Info Top Bar",
-        "block": "Section 3"
+        "block": "Section 3",
+        "scss": false
       }
     }
   }
