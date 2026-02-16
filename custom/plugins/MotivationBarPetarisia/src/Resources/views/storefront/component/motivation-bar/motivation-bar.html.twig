@@ -12,7 +12,8 @@
             label: 'Free shipping',
             labelColor: '',
             description: 'Your order is free shipping costs now.',
-            icon: 'truck'
+            icon: 'truck',
+            customIcon: 'truck'
         },
         {
             key: 'gift',
@@ -20,7 +21,8 @@
             label: 'Free gift',
             labelColor: '',
             description: 'Congratulations, You have unlocked a free gift in your package. Choose one gift you would like in the gifts list that appeared.',
-            icon: 'package-gift'
+            icon: 'package-gift',
+            customIcon: 'package-gift'
         },
         {
             key: 'discount',
@@ -28,7 +30,8 @@
             label: '10% discount',
             labelColor: '',
             description: 'Congratulations, 10% off your entire order.',
-            icon: 'trash'
+            icon: '',
+            customIcon: 'lucide-discount'
         }
     ] %}
 
@@ -110,7 +113,14 @@
         <div class="motivation-bar__iconBank" hidden>
             {% for goal in goals %}
                 <div data-mb-icon-template="{{ goal.icon }}">
-                    {% sw_icon goal.icon style { size: 'sm' } %}
+                    {% if goal.icon %}
+                        {% sw_icon goal.icon style { size: 'sm' } %}
+                    {% else %}
+                        {% sw_icon goal.customIcon style {
+                            namespace: 'PetarisiaTheme',
+                            size: 'sm'
+                        } %}
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

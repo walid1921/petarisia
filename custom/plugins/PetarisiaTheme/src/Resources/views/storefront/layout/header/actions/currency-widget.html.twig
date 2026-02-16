@@ -1,7 +1,7 @@
 {% sw_extends '@Storefront/storefront/layout/header/actions/currency-widget.html.twig' %}
 
 {% block layout_header_actions_currency_widget_dropdown_toggle %}
-    <button class="btn dropdown-toggle top-bar-nav-btn text-white"
+    <button class="btn dropdown-toggle top-bar-nav-btn fs-6"
             type="button"
             id="currenciesDropdown-{{ position }}"
             data-bs-toggle="dropdown"
@@ -9,7 +9,7 @@
             aria-expanded="false"
             aria-label="{{ 'header.currencyTrigger'|trans({ '%currency%': context.currency.translated.name })|striptags }}">
         {% block layout_header_actions_currency_widget_dropdown_toggle_name %}
-            <span aria-hidden="true" class="text-white">{{ context.currency.symbol }}</span>
+            <span aria-hidden="true" class="currency-icon">{{ context.currency.symbol }}</span>
             <span class="top-bar-nav-text text-white">{{ context.currency.translated.name }}</span>
         {% endblock %}
     </button>
