@@ -1,0 +1,119 @@
+//! Hero section
+.cms-block.bg-image {
+  position: relative;
+  isolation: isolate;
+  height: 70vh;
+
+  .cms-image-container {
+    width: 100%;
+    height: 70vh;
+
+    .cms-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .cms-block-container {
+    height: 100% !important;
+
+    .cms-block-container-row {
+      height: 100% !important;
+    }
+  }
+
+  .cms-element-alignment {
+    h2 {
+      font-size: clamp(1rem, 5vw, 2rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      color: white;
+    }
+    p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      margin-bottom: 20px !important;
+      font-weight: 300;
+    }
+    a {
+      @include link-underline(var(--bs-white));
+      color: white;
+      font-size: clamp(0.95rem, 2vw, 1.125rem);
+      font-weight: 400;
+    }
+  }
+
+  .image-dark-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.10),
+                    rgba(0, 0, 0, 0.80)
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+//! Join today section
+.cta-shop {
+  position: relative;
+  isolation: isolate;
+  min-height: 65vh;
+  display: grid;
+  place-items: center;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    //background-image: url("#{$app-css-relative-asset-path}/logo.png");
+    background-size: cover;
+    background-position: center;
+    filter: saturate(.9);
+    z-index: -2;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+                      to bottom,
+                      rgba(0, 0, 0, 0.10),
+                      rgba(0, 0, 0, 0.90)
+      );
+      z-index: -1;
+    }
+  }
+
+  &__inner {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding-block: clamp(3rem, 7vh, 6rem);
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    max-width: 720px;
+    width: min(92%, 760px);
+    background: var(--bs-body-bg);
+    color: var(--bs-black);
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  &__subtitle {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 1.25rem;
+    color: var(--bs-gray);
+    font-size: clamp(.95rem, 1.3vw, 1.125rem);
+    line-height: 1.6;
+  }
+}
