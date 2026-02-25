@@ -52,7 +52,7 @@
     {% endif %}
 
     {# Check if this is a hero-image block #}
-    {% set isHeroImage = block.cssClass and 'hero-image' in block.cssClass %}
+{#    {% set isHeroSection = block.cssClass and 'hero-section' in block.cssClass %}#}
 
     <div
             class="cms-block {{ blockClasses|join(' ') }} position-relative"
@@ -67,6 +67,8 @@
                         class: 'cms-block-background media-mode--' ~ block.backgroundMediaMode
                     }
                 } %}
+                {# Dark fade #}
+                <div class="image-dark-overlay"></div>
             {% elseif (block.type == 'text-on-image') %}
                 {% set defaultMediaUrl = null %}
 
@@ -84,31 +86,6 @@
                 {% endif %}
             {% endif %}
         {% endblock %}
-
-        {# Hero image overlay and content #}
-        {% if isHeroImage %}
-            {% block section_hero_image_overlay %}
-                {# Dark fade overlay #}
-                <div class="image-dark-overlay"></div>
-
-                {# Content overlay #}
-                <div class="slider-content-overlay">
-
-                        <div class="slider-content">
-                            <h1 class="slider-content__title">
-                                PETARISIA — Your Shop Where To Be Different
-                            </h1>
-                            <p class="slider-content__subtitle">
-                                Minimalist. Transformable. Timeless. Discover our Opening collection.
-                            </p>
-                            <a href="#" class="slider-content__link">
-                                Discover
-                            </a>
-                        </div>
-
-                </div>
-            {% endblock %}
-        {% endif %}
 
         {% block section_content_block_container %}
             <div class="cms-block-container"
