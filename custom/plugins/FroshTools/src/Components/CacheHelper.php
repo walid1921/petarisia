@@ -1,0 +1,111 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Frosh\Tools\Components;
+
+use Frosh\Tools\Components\Exception\CannotClearCacheException;
+use Symfony\Component\Process\Process;
+
+class CacheHelper
+{
+    public static function getSize(string $dir): int
+    {
+        if (\is_file($dir)) {
+            return \filesize($dir) ?: self::getSizeFallback($dir);
+        }
+
+        return self::getSizeFast($dir) ?? self::getSizeFallback($dir);
+    }
+
+    public static function removeDir(string $path): void
+    {
+        // If the given path is a file
+        if (is_file($path)) {
+            /** @phpstan-ignore shopware.forbidLocalDiskWrite */
+            unlink($path);
+
+            return;
+        }
+
+        if (self::rsyncAvailable()) {
+            $blankDir = sys_get_temp_dir() . '/' . uniqid() . '/';
+
+            /** @phpstan-ignore shopware.forbidLocalDiskWrite */
+            if (!mkdir($blankDir, 0o755, true) && !is_dir($blankDir)) {
+                throw new \RuntimeException(\sprintf('Directory "%s" was not created', $blankDir));
+            }
+
+            $process = new Process(['rsync', '-qa', '--delete', $blankDir, $path . '/']);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new CannotClearCacheException($process->getErrorOutput());
+            }
+
+            /** @phpstan-ignore shopware.forbidLocalDiskWrite */
+            rmdir($blankDir);
+        } else {
+            $process = new Process(['find', $path . '/', '-delete']);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new CannotClearCacheException($process->getErrorOutput());
+            }
+        }
+    }
+
+    private static function getSizeFast(string $dir): ?int
+    {
+        $process = new Process(['du', '-s', $dir]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            return null;
+        }
+
+        if (preg_match('/\d+/', $process->getOutput(), $match)) {
+            return (int) $match[0] * 1024;
+        }
+
+        return null;
+    }
+
+    private static function getSizeFallback(string $path): int
+    {
+        if (!is_dir($path)) {
+            return 0;
+        }
+
+        $dirIterator = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS | \FilesystemIterator::SKIP_DOTS);
+        $iterator = new \RecursiveIteratorIterator(
+            $dirIterator,
+            \RecursiveIteratorIterator::LEAVES_ONLY,
+        );
+
+        $size = 0;
+
+        /** @var \SplFileInfo $entry */
+        foreach ($iterator as $entry) {
+            if ($entry->getFilename() === '.gitkeep') {
+                continue;
+            }
+
+            if (!$entry->isFile()) {
+                continue;
+            }
+
+            $size += $entry->getSize();
+        }
+
+        return $size;
+    }
+
+    private static function rsyncAvailable(): bool
+    {
+        $process = new Process(['rsync', '--version']);
+        $process->run();
+
+        return $process->isSuccessful();
+    }
+}

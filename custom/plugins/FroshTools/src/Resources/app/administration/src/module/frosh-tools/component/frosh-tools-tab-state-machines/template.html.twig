@@ -1,0 +1,26 @@
+<sw-card-view>
+    <sw-card
+        class="frosh-tools-tab-state-machines__state-machines-card"
+        deprecated
+        :title="$t('frosh-tools.tabs.state-machines.title')"
+        :isLoading="isLoading"
+        :large="true"
+        positionIdentifier="frosh-tools-tab-state-machines"
+    >
+        <div
+            id="state_machine"
+            class="frosh-tools-tab-state-machines__state-machines-card-image-wrapper"
+        ></div>
+        <template #toolbar>
+            <sw-single-select
+                v-model:value="selectedStateMachine"
+                :options="stateMachineOptions"
+                :aside="true"
+                :disable-search-function="true"
+                @update:value="onStateMachineChange"
+                :label="$t('frosh-tools.tabs.state-machines.label')"
+                :placeholder="$t('frosh-tools.chooseStateMachine')"
+            />
+        </template>
+    </sw-card>
+</sw-card-view>

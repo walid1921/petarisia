@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd">
+    <meta>
+        <name>SwagAnalytics</name>
+        <label>Shopware Analytics</label>
+        <label lang="en-US">Shopware Analytics</label>
+        <label lang="de-DE">Shopware Analytics</label>
+        <description>This service delivers an overview of the most essential shop key figures, enhancing your ability to analyze shop performance directly in the Shopware administration.</description>
+        <description lang="en-US">This service delivers an overview of the most essential shop key figures, enhancing your ability to analyze shop performance directly in the Shopware administration.</description>
+        <description lang="de-DE">Dieser Service bietet einen Überblick über die wichtigsten Kennzahlen des Shops und ermöglicht die Shop-Performance direkt in der Shopware-Administration zu analysieren.</description>
+        <author>shopware AG</author>
+        <copyright>(c) shopware AG</copyright>
+        <version>2.9.0</version>
+        <compatibility>&gt;=6.6.0.0</compatibility>
+        <license>MIT</license>
+        <icon>icon.png</icon>
+    </meta>
+    <setup>
+        <registrationUrl>https://swag-analytics.apps.shopware.io/api/lifecycle/register</registrationUrl>
+    </setup>
+    <admin>
+        <base-app-url>https://swag-analytics.apps.shopware.io</base-app-url>
+        <module name="sw-analytics" parent="sw-dashboard" source="https://swag-analytics.apps.shopware.io">
+            <label>Analytics</label>
+            <label lang="en-US">Analytics</label>
+            <label lang="de-DE">Analytics</label>
+        </module>
+        <main-module source="https://swag-analytics.apps.shopware.io"></main-module>
+    </admin>
+    <webhooks>
+        <webhook name="app.installed" url="https://swag-analytics.apps.shopware.io/api/webhook" event="app.installed"></webhook>
+        <webhook name="app.activated" url="https://swag-analytics.apps.shopware.io/api/webhook" event="app.activated"></webhook>
+        <webhook name="app.deactivated" url="https://swag-analytics.apps.shopware.io/api/webhook" event="app.deactivated"></webhook>
+        <webhook name="app.updated" url="https://swag-analytics.apps.shopware.io/api/webhook" event="app.updated"></webhook>
+        <webhook name="app.deleted" url="https://swag-analytics.apps.shopware.io/api/webhook" event="app.deleted"></webhook>
+        <webhook name="sales_channel.written" url="https://swag-analytics.apps.shopware.io/api/webhook" event="sales_channel.written"></webhook>
+        <webhook name="sales_channel.deleted" url="https://swag-analytics.apps.shopware.io/api/webhook" event="sales_channel.deleted"></webhook>
+    </webhooks>
+    <permissions>
+        <read>user</read>
+        <read>system_config</read>
+        <read>order</read>
+        <read>order_line_item</read>
+        <read>order_transaction</read>
+        <read>order_address</read>
+        <read>order_delivery</read>
+        <read>order_customer</read>
+        <read>customer</read>
+        <read>customer_group</read>
+        <read>customer_address</read>
+        <read>country</read>
+        <read>promotion</read>
+        <read>product</read>
+        <read>product_media</read>
+        <read>property_group</read>
+        <read>property_group_option</read>
+        <read>product_manufacturer</read>
+        <read>sales_channel</read>
+        <read>payment_method</read>
+        <read>shipping_method</read>
+        <read>state_machine</read>
+        <read>state_machine_state</read>
+        <read>media</read>
+        <create>system_config</create>
+        <delete>system_config</delete>
+        <update>system_config</update>
+    </permissions>
+    <cookies>
+        <group>
+            <snippet-name>SwagAnalytics.cookies.groupName</snippet-name>
+            <snippet-description>SwagAnalytics.cookies.groupDescription</snippet-description>
+            <entries>
+                <cookie>
+                    <cookie>_swa_consent_enabled</cookie>
+                    <snippet-name>SwagAnalytics.cookies.cookieName</snippet-name>
+                    <snippet-description>SwagAnalytics.cookies.cookieDescription</snippet-description>
+                    <value>1</value>
+                    <expiration>30</expiration>
+                </cookie>
+            </entries>
+        </group>
+    </cookies>
+</manifest>

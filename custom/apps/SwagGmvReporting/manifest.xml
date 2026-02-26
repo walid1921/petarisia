@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd">
+    <meta>
+        <name>SwagGmvReporting</name>
+        <label>Shopware GMV Reporting</label>
+        <label lang="de-DE">Shopware GMV Reporting</label>
+        <description>A lightweight service to fetch and report the GMV.</description>
+        <description lang="de-DE">Ein leichtgewichtiger Service zum Abrufen und Melden der GMV-Daten.</description>
+        <author>shopware AG</author>
+        <copyright>(c) by shopware AG</copyright>
+        <version>1.0.0</version>
+        <license>MIT</license>
+    </meta>
+
+    <setup>
+        <registrationUrl>https://gmv-reporting.apps.shopware.io/app/register</registrationUrl>
+    </setup>
+
+    <webhooks>
+        <webhook name="appActivated" url="https://gmv-reporting.apps.shopware.io/app/activate" event="app.activated"/>
+        <webhook name="appDeactivated" url="https://gmv-reporting.apps.shopware.io/app/deactivate" event="app.deactivated"/>
+        <webhook name="appDeleted" url="https://gmv-reporting.apps.shopware.io/app/delete" event="app.deleted"/>
+    </webhooks>
+
+    <permissions>
+        <read>order</read>
+        <read>order_line_item</read>
+        <read>currency</read>
+        <read>system_config</read>
+    </permissions>
+</manifest>

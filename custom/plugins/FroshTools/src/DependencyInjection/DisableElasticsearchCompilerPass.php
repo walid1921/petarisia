@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Frosh\Tools\DependencyInjection;
+
+use Frosh\Tools\Components\Elasticsearch\DisabledElasticsearchManager;
+use Frosh\Tools\Components\Elasticsearch\ElasticsearchManager;
+use OpenSearch\Client;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+class DisableElasticsearchCompilerPass implements CompilerPassInterface
+{
+    public function process(ContainerBuilder $container): void
+    {
+        if ($container->hasDefinition(Client::class)) {
+            $container->setParameter('frosh_tools.elasticsearch.enabled', '%elasticsearch.enabled%');
+
+            return;
+        }
+
+        $manager = $container->getDefinition(ElasticsearchManager::class);
+        $manager->setClass(DisabledElasticsearchManager::class);
+        $manager->setArguments([]);
+        $container->setParameter('frosh_tools.elasticsearch.enabled', false);
+    }
+}

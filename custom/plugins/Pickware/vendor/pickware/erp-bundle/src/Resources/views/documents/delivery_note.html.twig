@@ -1,0 +1,25 @@
+{% sw_extends '@Framework/documents/delivery_note.html.twig' %}
+
+{% block document_head %}
+    {{ parent() }}
+    {# Override the fixed product-label column width from Shopware's base styles to avoid
+       undesired line breaks when batch information is displayed in the line item label. #}
+    <style>
+        .line-item-table-header > th.product-label {
+            width: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block document_line_item_table_column_label %}
+    {{ parent() }}
+
+    {% sw_include '@PickwareErpBundle/documents/components/batch-line-item-row.html.twig' with { lineItem } %}
+    {% sw_include '@PickwareErpBundle/documents/components/picking-properties-line-item-row.html.twig' with { lineItem } %}
+    {% sw_include '@PickwareErpBundle/documents/components/custom-fields-line-item-row.html.twig' with { lineItem, config } %}
+{% endblock %}
+
+{% block shipping_address %}
+    {{ parent() }}
+    {% sw_include '@PickwareErpBundle/documents/components/custom-fields-order.html.twig' with { config } %}
+{% endblock %}

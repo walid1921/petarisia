@@ -1,0 +1,11 @@
+{% block response %}
+    {# TODO: also check for the joint agreement - NEXT-34721 #}
+    {% set consentState = services.config.get('core.usageData.consentState') %}
+    {% set merchantConsent = consentState == 'accepted' ? true : false %}
+
+    {% set trackingId = services.config.get('SwagAnalytics.config.trackingId', hook.salesChannelContext.salesChannel.id) %}
+
+    {% set response = services.response.json({ 'merchantConsent': merchantConsent, 'trackingId': trackingId }) %}
+
+    {% do hook.setResponse(response) %}
+{% endblock %}

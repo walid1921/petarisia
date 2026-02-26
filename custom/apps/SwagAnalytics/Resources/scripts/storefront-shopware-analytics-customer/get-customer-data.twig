@@ -1,0 +1,24 @@
+{% block response %}
+    {% set customer = hook.salesChannelContext.customer %}
+    {% set currentCustomerGroup = hook.salesChannelContext.currentCustomerGroup %}
+
+    {% if customer is null %}
+        {% set response = services.response.json({
+            'customer': null,
+        }) %}
+    {% else %}
+        {% set response = services.response.json({
+            'customer': {
+                'id': customer.id,
+                'firstName': customer.firstName,
+                'lastName': customer.lastName,
+                'email': customer.email,
+                'customerGroupId': currentCustomerGroup.id,
+                'customerGroupName': currentCustomerGroup.name,
+                'guest': customer.guest,
+            },
+        }) %}
+    {% endif %}
+
+    {% do hook.setResponse(response) %}
+{% endblock %}

@@ -1,0 +1,26 @@
+.frosh-tools {
+    .sw-tabs {
+        width: calc(100% - 175px);
+        margin: 0 auto;
+    }
+
+    .sw-card.sw-card--large {
+        max-width: calc(100% - 100px);
+    }
+
+    .sw-card-view__content {
+        padding-top: 0;
+        width: calc(100% - 100px);
+        margin: 0 auto;
+    }
+
+    .sw-card-view {
+        position: initial;
+        height: initial;
+        width: initial;
+    }
+}
+
+.sw-version__status.has-permission {
+    cursor: pointer;
+}

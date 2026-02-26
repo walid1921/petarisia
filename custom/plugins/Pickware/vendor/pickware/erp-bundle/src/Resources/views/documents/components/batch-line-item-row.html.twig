@@ -1,0 +1,40 @@
+{% if (config.displayBatchTrackingInfo is not defined or config.displayBatchTrackingInfo)
+    and lineItem.payload.pwErpBatchInfo is defined and lineItem.payload.pwErpBatchInfo|length > 0 %}
+    {% set hasSingleBatch = lineItem.payload.pwErpBatchInfo|length == 1 %}
+    {% set unknownLabel = 'pickware-erp-starter.order-document-batch.unknown-label'|trans %}
+    {% for batchInfo in lineItem.payload.pwErpBatchInfo %}
+        <br>
+        {% if batchInfo.trackingProfile == 'number' %}
+            <b>{{ 'pickware-erp-starter.order-document-batch.batch-label'|trans }}:</b>
+            {{- ' ' -}}
+            {%- if batchInfo.batchNumber -%}
+                {{ batchInfo.batchNumber|sw_sanitize(null, true) }}
+            {%- else -%}
+                {{ unknownLabel }}
+            {%- endif -%}
+        {% elseif batchInfo.trackingProfile == 'best_before_date' %}
+            <b>{{ 'pickware-erp-starter.order-document-batch.best-before-date-label'|trans }}:</b>
+            {{- ' ' -}}
+            {%- if batchInfo.bestBeforeDate -%}
+                {{ batchInfo.bestBeforeDate|format_date('short', locale=locale) }}
+            {%- else -%}
+                {{ unknownLabel }}
+            {%- endif -%}
+        {% else %}
+            <b>{{ 'pickware-erp-starter.order-document-batch.batch-and-bbd-label'|trans }}:</b>
+            {{- ' ' -}}
+            {%- if batchInfo.batchNumber -%}
+                {{ batchInfo.batchNumber|sw_sanitize(null, true) }}
+            {%- else -%}
+                {{ unknownLabel }}
+            {%- endif -%}
+            {{- ' / ' -}}
+            {%- if batchInfo.bestBeforeDate -%}
+                {{ batchInfo.bestBeforeDate|format_date('short', locale=locale) }}
+            {%- else -%}
+                {{ unknownLabel }}
+            {%- endif -%}
+        {% endif %}
+        {%- if not hasSingleBatch %} ({{ batchInfo.quantity }}){% endif %}
+    {% endfor %}
+{% endif %}

@@ -4,6 +4,13 @@
   min-width: 80px !important;
 }
 
+@media (max-width: 575.98px) {
+  .header-logo-picture {
+    max-width: 150px !important;
+    min-width: 50px !important;
+  }
+}
+
 .filter-property-select-preview {
   border-radius: $border-radius !important;
   width: 20px !important;
