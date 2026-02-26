@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([["extension1811432411_SwagAnalytics_Resources_app_storefront_src_event_track_order-created-event_js"],{505:(e,r,a)=>{function s(){let e=new URLSearchParams(window.location.search);window._shopwareAnalytics.track("order:placed",{orderId:e.get("orderId")})}a.r(r),a.d(r,{pageLoaded:()=>s})}}]);

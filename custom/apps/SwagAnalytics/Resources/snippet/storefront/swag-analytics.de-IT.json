@@ -1,0 +1,10 @@
+{
+  "SwagAnalytics": {
+    "cookies": {
+      "groupName": "Shopware Analytics",
+      "groupDescription": "<p>Shopware Analytics ist ein Analysedienst zur Erfassung des Shopping-Verhaltens auf diesem Webshop, bereitgestellt von der shopware AG (Ebbinghoff 10, 48624 Schöppingen, Deutschland) in gemeinsamer Verantwortung (siehe auch die Datenschutzinformationen). Die Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 S. 1 lit. a DSGVO. Sofern Informationen lokal gespeichert werden, entnehmen Sie bitte weitere Details zur Datenverarbeitung unserer Datenschutzerklärung.</p><p>Empfänger der Daten ist die shopware AG sowie IT-Dienstleister. Verwendete Technologien umfassen Local Storage. Die erhobenen Daten beinhalten Kundengruppe, besuchte Seiten, Klickpfade, Datum und Uhrzeit des Besuches, Informationen über das genutzte Endgerät (Auflösung, Auflösungsdichte, Betriebssystem), Referrer URL, Informationen des verwendeten Browsers, Gebietsschema, Suchanfragen, Zeitzone. Der Zweck der Datenerhebung dient dem Marketing, der Analyse und der Statistik.</p><p>Die Datenverarbeitung erfolgt innerhalb der Europäischen Union. Bei Fragen zum Datenschutz können Sie den Datenschutzbeauftragten unter legal@shopware.com kontaktieren. Weitere Informationen finden Sie auf <a href=\"https://www.shopware.com/de/datenschutz/website\">https://www.shopware.com/de/datenschutz/website</a>.</p>",
+      "cookieName": "Gespeicherte Daten",
+      "cookieDescription": "Shopware Analytics fügt die folgenden Daten zum Local Storage des Browsers hinzu, bis die Zustimmung widerrufen wird: _swa_anonymousId (eine eindeutige Kennung des Besuchers), _swa_userTraits (Benutzermerkmale des Besuchers)."
+    }
+  }
+}

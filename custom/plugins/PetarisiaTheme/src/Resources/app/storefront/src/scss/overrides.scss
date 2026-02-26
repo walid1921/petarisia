@@ -72,6 +72,12 @@ $container-max-widths: (
   padding: 0 !important;
 }
 
+@media (min-width: 576px) {
+  .header-row {
+    padding-bottom: 0.5rem !important;
+  }
+}
+
 .cms-image-container {
   img {
     width: 100% !important;

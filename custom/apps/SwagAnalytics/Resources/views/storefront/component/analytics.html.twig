@@ -1,0 +1,19 @@
+{% sw_extends '@Storefront/storefront/component/analytics.html.twig' %}
+
+{% block component_head_analytics %}
+    {{ parent() }}
+
+    <!-- Shopware Analytics -->
+    <script>
+        window.shopwareAnalytics = {
+            trackingId: '{{ config('SwagAnalytics.config.trackingId', context.salesChannelId) }}',
+            merchantConsent: {{ config('core.usageData.consentState') == "accepted" ? "true" : "false" }},
+            debug: {{ config('SwagAnalytics.config.debug', context.salesChannelId) == "true" ? "true" : "false" }},
+            storefrontController: '{{ controllerName }}',
+            storefrontAction: '{{ controllerAction }}',
+            storefrontRoute: '{{ activeRoute|lower }}',
+            storefrontCmsPageType: {% if page.cmsPage.type is defined %} '{{ page.cmsPage.type }}' {% else %} null {% endif %},
+        };
+    </script>
+    <!-- End Shopware Analytics -->
+{% endblock %}

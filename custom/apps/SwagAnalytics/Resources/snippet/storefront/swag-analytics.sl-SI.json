@@ -1,0 +1,10 @@
+{
+  "SwagAnalytics": {
+    "cookies": {
+      "groupName": "Shopware Analytics",
+      "groupDescription": "<p>Shopware Analytics is an analytics service for tracking shopping behavior on this webshop, provided by shopware AG (Ebbinghoff 10, 48624 Schöppingen, Germany) in joint responsibility (see also the data protection information). The legal basis for data processing is Art. 6 para. 1 s. 1 lit. a GDPR. If data is stored locally, please refer to our privacy policy for further details on data processing.</p><p>The recipient of the data is shopware AG and IT service providers. Technologies used include local storage. The collected data includes customer group, pages visited, click paths, date and time of visit, information about the end device used (resolution, resolution density, operating system), referrer URL, information about the browser used, locale, search queries, time zone. The purpose of data collection is for marketing, analysis, and statistical purposes.</p><p>Data processing takes place within the European Union. If you have any questions about data protection, you can contact the data protection officer at legal@shopware.com. Further information can be found at <a href=\"https://www.shopware.com/en/privacy/website\" target=\"_blank\">https://www.shopware.com/en/privacy/website</a>.</p>",
+      "cookieName": "Stored data",
+      "cookieDescription": "Shopware Analytics adds the following information to your browser's local storage until consent is revoked: _swa_anonymousId (a unique identifier of the visitor), _swa_userTraits (user traits of the visitor)."
+    }
+  }
+}
