@@ -1,7 +1,0 @@
-{
-    "pickware-shipping-bundle": {
-        "data-transfer": {
-            "allow-email-transfer": "My email address can be sent to the shipping provider."
-        }
-    }
-}

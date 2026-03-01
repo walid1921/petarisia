@@ -1,8 +1,0 @@
-includes:
-	- ../../tools/phpstan/phpstan.neon
-	- phpstan-baseline.neon
-
-parameters:
-    tmpDir: ../../tools/phpstan/cache/mobile-app-auth-bundle
-    paths:
-        - src

@@ -1,0 +1,59 @@
+{% sw_extends "@Storefront/storefront/block/cms-block-image-text-row.html.twig" %}
+
+{% block block_image_text_row %}
+    {% set columns = 3 %}
+
+    {% block block_image_text_row_left %}
+        <div class="col-md-4 block-image">
+            <div class="block-image-media">
+                {% set element = block.slots.getSlot('left-image') %}
+                <div class="block-image-media__image" data-cms-element-id="{{ element.id }}">
+                    {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
+                </div>
+
+                {% set element = block.slots.getSlot('left-text') %}
+                <div class="block-image-text-overlay" data-cms-element-id="{{ element.id }}">
+                    {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
+                </div>
+
+                <div class="image-dark-overlay"></div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block block_image_text_row_center %}
+        <div class="col-md-4 block-image">
+            <div class="block-image-media">
+                {% set element = block.slots.getSlot('center-image') %}
+                <div class="block-image-media__image" data-cms-element-id="{{ element.id }}">
+                    {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
+                </div>
+
+                {% set element = block.slots.getSlot('center-text') %}
+                <div class="block-image-text-overlay" data-cms-element-id="{{ element.id }}">
+                    {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
+                </div>
+
+                <div class="image-dark-overlay"></div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block block_image_text_row_right %}
+        <div class="col-md-4 block-image">
+            <div class="block-image-media">
+                {% set element = block.slots.getSlot('right-image') %}
+                <div class="block-image-media__image" data-cms-element-id="{{ element.id }}">
+                    {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
+                </div>
+
+                {% set element = block.slots.getSlot('right-text') %}
+                <div class="block-image-text-overlay" data-cms-element-id="{{ element.id }}">
+                    {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
+                </div>
+
+                <div class="image-dark-overlay"></div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}

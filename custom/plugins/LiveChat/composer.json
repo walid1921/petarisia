@@ -1,0 +1,27 @@
+{
+    "name": "petarisia/live-chat",
+    "description": "petarisia/live-chat",
+    "type": "shopware-platform-plugin",
+    "version": "1.0.0",
+    "license": "MIT",
+    "require": {
+        "shopware/core": "~6.7.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "Petarisia\\LiveChat",
+        "label": {
+            "de-DE": "Live chat",
+            "en-GB": "Live chat"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Petarisia\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Petarisia\\Tests\\": "tests/"
+        }
+    }
+}
