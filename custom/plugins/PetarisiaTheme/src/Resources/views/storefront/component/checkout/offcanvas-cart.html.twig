@@ -42,6 +42,10 @@
     {% include '@MotivationBarPetarisia/storefront/component/motivation-bar/motivation-bar.html.twig' ignore missing %}
 {% endblock %}
 
+{% block component_live_chat %}
+    {% include '@LiveChat/storefront/component/live-chat/live-chat.html.twig' ignore missing %}
+{% endblock %}
+
 {# If cart is Empty #}
 {% block component_offcanvas_cart_empty %}
     <div class="offcanvas-cart-empty-wrapper">
