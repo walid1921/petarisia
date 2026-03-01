@@ -57,6 +57,76 @@
   }
 }
 
+//! Collection showcase
+.cms-block-container{
+  padding-inline: 1rem !important;
+}
+.collection-showcase__card .block-image {
+  padding: 0 5px !important;
+
+  .block-image-media {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+
+    img {
+      display: block;        // removes inline-image baseline wiggle
+      width: 100%;
+      height: 100%;
+      transition: transform 0.45s ease;
+      will-change: transform;
+      transform-origin: center; // or "bottom left" if you want that vibe
+
+      &:hover {
+        transform: scale(1.08);
+      }
+    }
+
+
+    .image-dark-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: linear-gradient(
+                      to bottom,
+                      rgba(0, 0, 0, 0),
+                      rgba(0, 0, 0, 0.50)
+      );
+    }
+  }
+}
+.collection-showcase__card .block-image-text-overlay {
+  position: absolute;
+  padding-left: 16px;
+  bottom: 16px;
+  z-index: 2;
+
+  // optional: make text readable on images
+  max-width: calc(100% - 32px);
+
+  .cms-element-text{
+    padding-top: 0 !important;
+
+    p {
+      margin-bottom: 0 !important;
+    }
+
+    a {
+      @include link-underline(var(--bs-white));
+      color: white;
+      font-size: clamp(0.95rem, 2vw, 1.125rem);
+      font-weight: 400;
+    }
+  }
+}
+.block-image-media__image {
+  // optional: ensure overlay sits on top cleanly
+  position: relative;
+  z-index: 1;
+
+}
+
 //! Join today section
 .cta-shop {
   position: relative;
@@ -116,79 +186,4 @@
     font-size: clamp(.95rem, 1.3vw, 1.125rem);
     line-height: 1.6;
   }
-}
-
-
-
-//! Collection showcase
-.cms-block-container{
-  padding-inline: 1rem !important;
-}
-
-.collection-showcase__card .block-image {
-  padding: 0 5px !important;
-
-  .block-image-media {
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-
-    img {
-      display: block;        // removes inline-image baseline wiggle
-      width: 100%;
-      height: 100%;
-      transition: transform 0.45s ease;
-      will-change: transform;
-      transform-origin: center; // or "bottom left" if you want that vibe
-
-      &:hover {
-          transform: scale(1.08);
-      }
-    }
-
-
-    .image-dark-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      background: linear-gradient(
-                      to bottom,
-                      rgba(0, 0, 0, 0),
-                      rgba(0, 0, 0, 0.50)
-      );
-    }
-  }
-}
-
-.collection-showcase__card .block-image-text-overlay {
-  position: absolute;
-  padding-left: 16px;
-  bottom: 16px;
-  z-index: 2;
-
-  // optional: make text readable on images
-  max-width: calc(100% - 32px);
-
-  .cms-element-text{
-    padding-top: 0 !important;
-
-    p {
-      margin-bottom: 0 !important;
-    }
-
-    a {
-      @include link-underline(var(--bs-white));
-      color: white;
-      font-size: clamp(0.95rem, 2vw, 1.125rem);
-      font-weight: 400;
-    }
-  }
-}
-
-.block-image-media__image {
-  // optional: ensure overlay sits on top cleanly
-  position: relative;
-  z-index: 1;
-
 }
