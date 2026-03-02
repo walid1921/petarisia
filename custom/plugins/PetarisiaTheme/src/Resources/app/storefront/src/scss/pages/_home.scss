@@ -1,9 +1,8 @@
 //! Hero section
-//! Hero section
 .cms-block.bg-image.hero-sticky {
   position: relative;
   isolation: isolate;
-  height: 100vh;
+  height: 82vh;
   overflow: hidden;
 
   // Make the background image fixed within the hero section
@@ -12,7 +11,7 @@
     top: 0; // Change this to negative value or 0 depending on your header
     left: 0;
     width: 100%;
-    height: calc(90vh + 200px); // Add extra height to compensate for header
+    height: 100vh; // Add extra height to compensate for header
     z-index: 1;
 
     img {
@@ -36,7 +35,10 @@
   .cms-block-container {
     position: relative;
     z-index: 2;
-    height: 80% !important;
+    height: 100% !important;
+    display: flex;
+    align-items: flex-end;
+
 
     .cms-block-container-row {
       height: 100% !important;
@@ -87,7 +89,20 @@
 .cms-block.bg-image.hero-sticky ~ * {
   position: relative;
   z-index: 10;
-  background: white; // or your page background color
+  background: $sw-background-color; // or your page background color
+}
+
+//! Products slider list
+.cms-element-product-slider {
+  margin-top: 50px;
+  .cms-element-title {
+    font-size: clamp(0.5rem, 5vw, 1.5rem) !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: $sw-color-brand-primary !important;
+  }
 }
 
 //! Collection showcase
@@ -161,62 +176,90 @@
 }
 
 //! Join today section
-.cta-shop {
+.cms-block.bg-image.join-today {
   position: relative;
   isolation: isolate;
-  min-height: 65vh;
+  min-height: clamp(420px, 55vh, 680px);
   display: grid;
   place-items: center;
+  overflow: hidden;
 
-  &__bg {
+  // Background image Shopware renders via sw_thumbnails
+  .cms-block-background {
     position: absolute;
     inset: 0;
-    //background-image: url("#{$app-css-relative-asset-path}/logo.png");
-    background-size: cover;
-    background-position: center;
-    filter: saturate(.9);
-    z-index: -2;
+    z-index: 0;
 
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-                      to bottom,
-                      rgba(0, 0, 0, 0.10),
-                      rgba(0, 0, 0, 0.90)
-      );
-      z-index: -1;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
-  &__inner {
+  .image-dark-overlay--join {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.10),
+                    rgba(0, 0, 0, 0.80)
+    );
+  }
+
+  // Ensure content is above overlay
+  .cms-block-container {
+    position: relative;
+    z-index: 2;
     width: 100%;
-    display: grid;
-    place-items: center;
-    padding-block: clamp(3rem, 7vh, 6rem);
   }
 
-  &__panel {
-    display: flex;
-    flex-direction: column;
+  .cms-block-container-row {
+    // join block is usually one column; make it center
     justify-content: center;
-    align-items: center;
-    gap: 30px;
-    max-width: 720px;
-    width: min(92%, 760px);
-    background: var(--bs-body-bg);
-    color: var(--bs-black);
-    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 4vw, 3rem);
-    text-align: center;
   }
 
-  &__subtitle {
+  .cms-element-text {
+    padding: 0 !important;
+    width: min(900px, 92vw);
+    margin-inline: auto;
     display: flex;
-    flex-direction: column;
-    margin: 0 0 1.25rem;
-    color: var(--bs-gray);
-    font-size: clamp(.95rem, 1.3vw, 1.125rem);
-    line-height: 1.6;
+    justify-content: center;
+  }
+
+
+  .cms-element-alignment {
+    background: $sw-background-color;
+    color: $sw-color-brand-primary;
+    text-align: center;
+    width: 100%;
+    padding: clamp(1.75rem, 4vw, 3.25rem) clamp(1.5rem, 6vw, 6rem);
+
+
+
+    p {
+      margin: 0 0 1.25rem !important;
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+      font-weight: 400;
+    }
+
+    a, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.25rem;
+      text-decoration: none;
+      border: 1px solid rgba(0,0,0,.25);
+      background: rgba(0,0,0,.75);
+      color: white;
+      transition: transform .15s ease, background .2s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        background: rgba(0,0,0,.85);
+      }
+    }
   }
 }

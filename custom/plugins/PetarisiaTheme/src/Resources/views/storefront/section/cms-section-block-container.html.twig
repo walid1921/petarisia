@@ -51,8 +51,9 @@
         {% set blockClasses = ['hidden-desktop']|merge(blockClasses) %}
     {% endif %}
 
-    {# Check if this is a hero-image block #}
-{#    {% set isHeroSection = block.cssClass and 'hero-section' in block.cssClass %}#}
+
+    {% set isJoinSection = block.cssClass and 'join-today' in block.cssClass %}
+    {% set isHeroSection = block.cssClass and 'hero-sticky' in block.cssClass %}
 
     <div
             class="cms-block {{ blockClasses|join(' ') }} position-relative"
@@ -67,8 +68,14 @@
                         class: 'cms-block-background media-mode--' ~ block.backgroundMediaMode
                     }
                 } %}
-                {# Dark fade #}
-                <div class="image-dark-overlay"></div>
+                {# Dark fade overlay variants #}
+                {% if isHeroSection %}
+                    <div class="image-dark-overlay image-dark-overlay--hero"></div>
+                {% elseif isJoinSection %}
+                    <div class="image-dark-overlay image-dark-overlay--join"></div>
+                {% else %}
+                    <div class="image-dark-overlay"></div>
+                {% endif %}
             {% elseif (block.type == 'text-on-image') %}
                 {% set defaultMediaUrl = null %}
 
