@@ -1,0 +1,61 @@
+{% sw_extends "@Storefront/storefront/element/cms-element-product-slider.html.twig" %}
+
+{% block element_product_slider %}
+
+    {% if not sliderConfig %}
+        {% set sliderConfig = element.fieldConfig.elements %}
+    {% endif %}
+
+    {% set blockId = block.id %}
+
+    {% if element.data.products.elements %}
+        <div class="cms-element-{{ element.type }}{% if sliderConfig.displayMode.value == "standard" and sliderConfig.verticalAlign.value %} has-vertical-alignment{% endif %}">
+            {% block element_product_slider_alignment %}
+                {% if config.verticalAlign.value %}
+                    <div class="cms-element-alignment{% if sliderConfig.verticalAlign.value == "center" %} align-self-center{% elseif sliderConfig.verticalAlign.value == "flex-end" %} align-self-end{% else %} align-self-start{% endif %}">
+                {% endif %}
+
+                {% block element_product_slider_title %}
+                    {% if sliderConfig.title.value %}
+                        <div class="cms-element-title">
+                            <p class="cms-element-title-paragraph">{{ sliderConfig.title.value }}</p>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+
+                {% block element_product_slider_slider %}
+                    {# Free scrolling slider without tiny-slider initialization #}
+                    <div
+                            class="product-slider-free-scroll{% if sliderConfig.border.value %} has-border{% endif %}"
+                            role="region"
+                            aria-label="{{ 'component.cms.productGallery.ariaLabel'|trans({ '%total%': element.data.products.elements|length })|sw_sanitize }}"
+                            tabindex="0"
+                    >
+                        {% block element_product_slider_inner %}
+                            <div class="product-slider-scroll-container">
+                                {% for product in element.data.products.elements %}
+                                    {% block element_product_slider_inner_item %}
+                                        <div class="product-slider-item">
+                                            {% sw_include '@Storefront/storefront/component/product/card/box.html.twig' with {
+                                                'layout': sliderConfig.boxLayout.value,
+                                                'displayMode': sliderConfig.displayMode.value
+                                            } %}
+                                        </div>
+                                    {% endblock %}
+                                {% endfor %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% if config.verticalAlign.value %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endif %}
+
+    {% block element_product_slider_target_after_slider %}
+        <div id="content-after-target-{{ blockId }}"></div>
+    {% endblock %}
+{% endblock %}
